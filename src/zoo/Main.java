@@ -38,12 +38,12 @@ public class Main {
 		zoo.addAnimal(a2);
 		zoo.addAnimal(a3);zoo.addAnimal(a4);zoo.addAnimal(a5);zoo.addAnimal(a6);
 		
-		zoo.showAnimals();
-		System.out.println("---------");
-		
-		zoo.sortAnimals();
-		
-		zoo.showAnimals();
+//		zoo.showAnimals();
+//		System.out.println("---------");
+//		
+//		zoo.sortAnimals();
+//		
+//		zoo.showAnimals();
 
 	}
 

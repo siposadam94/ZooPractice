@@ -46,14 +46,8 @@ public class Zoo {
 		}
 	}
 	
-	public void showAnimals() {
-		for (Animal a : animals) {
-			System.out.println("Állat fajtája: " + a.getAnimalType() +" neve: " + a.getNickname());
-		}
-	}
-	
 	public void addEmployee(Employee employee) {
-		if(employee.getClass() == Director.class) {
+		if(employee instanceof Director) {
 			if(this.director == null) {
 				this.director = (Director) employee;
 				System.out.println("Az állatkert igazgatója " + director.getName() + " lett!");
@@ -66,28 +60,33 @@ public class Zoo {
 		
 	}
 	
-	public void releseEmployee(Employee employee){
-		if(employee.getClass() == Director.class) {
-			if(this.director == null) {
+	public void releseEmployee(Employee employee) {
+		if (employee instanceof Director) {
+			if (this.director == null) {
 				System.out.println("Az állatkertnek nincs jelenleg igazgatója!");
-			}else {
+			} else {
 				System.out.println("Az állatkert " + director.getName() + " igazgatója eltávozott!");
 				director = null;
 			}
-		}else {
+		} else {
 			int caredAnimalCounter = 0;
 			zookeepers.remove(employee);
 			GondoZoo gondoZoo = (GondoZoo) employee;
 			for (GondoZoo e : zookeepers) {
-				if(e.getCaredAnimalType() == gondoZoo.getCaredAnimalType()) {
+				if (e.getCaredAnimalType() == gondoZoo.getCaredAnimalType()) {
 					caredAnimalCounter++;
 				}
 			}
-			if(caredAnimalCounter == 0) {
+			if (caredAnimalCounter == 0) {
 				System.out.println("Az állatkertnek szüksége van " + gondoZoo.getCaredAnimalType() + " gondozóra!");
 			}
 		}
-		
+	}
+	
+	public void showAnimals() {
+		for (Animal a : animals) {
+			System.out.println("Állat fajtája: " + a.getAnimalType() +" neve: " + a.getNickname());
+		}
 	}
 	
 	public void addAnimal(Animal animal) {
@@ -119,7 +118,6 @@ public class Zoo {
 	public static void showZooCount() {
 		System.out.println("Az országnak " + zooCounter + " állatkertje van jelenleg!");	
 	}
-	
 	
 	{
 		System.out.println("Az állatkert megalapulása: " + LocalDate.now());
