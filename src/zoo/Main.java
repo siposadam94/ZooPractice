@@ -14,36 +14,54 @@ import zoo.employee.GondoZoo;
 public class Main {
 
 	public static void main(String[] args) {
+		//a
 		Zoo zoo = new Zoo();
-		
-		Animal a1 = new Animal(AnimalType.RHINO, "Rini", LocalDate.of(2018, 11, 22), Sex.MALE);
-		Animal a2 = new Animal(AnimalType.ELEPHANT, "Eli", LocalDate.of(2008, 3, 4), Sex.FEMALE);
-		Animal a3 = new Animal(AnimalType.GORILLA, "Zodd", LocalDate.of(2011, 2, 14), Sex.MALE);
-		Animal a4 = new Animal(AnimalType.GORILLA, "Appe", LocalDate.of(2011, 2, 14), Sex.MALE);
-		Animal a5 = new Animal(AnimalType.GORILLA, "Seth", LocalDate.of(2008, 4, 17), Sex.FEMALE);
-		Animal a6 = new Animal(AnimalType.GORILLA, "Body", LocalDate.of(2017, 6, 18), Sex.MALE);
-		
-		
+		//b
 		Employee e1 = new Director("Igazgato", LocalDate.of(1976, 1, 8), Sex.MALE);
-		Employee e2 = new GondoZoo("gondozo1", LocalDate.of(1976, 1, 8), Sex.MALE, AnimalType.ELEPHANT);
-		Employee e3 = new GondoZoo("gondozo2", LocalDate.of(1976, 1, 8), Sex.MALE, AnimalType.GORILLA);
-		Employee e4 = new GondoZoo("gondozo3", LocalDate.of(1976, 1, 8), Sex.FEMALE, AnimalType.RHINO);
-		
-		
 		zoo.addEmployee(e1);
-		zoo.addEmployee(e2);
-		zoo.addEmployee(e3);
-		zoo.addEmployee(e4);
+		//c
+		Animal a1 = new Animal(AnimalType.RHINO, "Rino", LocalDate.of(2018, 11, 22), Sex.MALE);
 		zoo.addAnimal(a1);
+		//d
+		Employee e2 = new GondoZoo("gondozo3", LocalDate.of(1976, 1, 8), Sex.FEMALE, AnimalType.RHINO);
+		zoo.addEmployee(e2);
+		//e
+		zoo.addAnimal(a1);
+		//f
+		Employee e3 = new Director("Igazgato2", LocalDate.of(1978, 6, 8), Sex.FEMALE);
+		zoo.addEmployee(e3);
+		//g
+		Employee e4 = new GondoZoo("gondozo1", LocalDate.of(1976, 1, 8), Sex.MALE, AnimalType.ELEPHANT);
+		zoo.addEmployee(e4);
+		//h
+		Animal a2 = new Animal(AnimalType.ELEPHANT, "Eli", LocalDate.of(2008, 3, 4), Sex.FEMALE);
 		zoo.addAnimal(a2);
-		zoo.addAnimal(a3);zoo.addAnimal(a4);zoo.addAnimal(a5);zoo.addAnimal(a6);
+		//i
+		zoo.showAnimals();
+		//j
+		zoo.sortAnimals();
+		//k
+		Zoo zoo2 = new Zoo();
+		//l
+		Zoo.showZooCount();
+		//m
 		
-//		zoo.showAnimals();
-//		System.out.println("---------");
-//		
-//		zoo.sortAnimals();
-//		
-//		zoo.showAnimals();
+		//n
+		zoo.showAnimals();
+		zoo.showEmployees();
+		//o
+		
+		//p
+		zoo.releseEmployee(e1);
+		//q
+		zoo.releseEmployee(e2);
+		//r
+		zoo.sellAnimal(a1);
+		//s
+		zoo.sellAnimal(a2);
+		//t
+		zoo.releseEmployee(e4);
+		//u
 
 	}
 
