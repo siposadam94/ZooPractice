@@ -1,9 +1,7 @@
 package zoo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 
 import zoo.animal.Animal;
 import zoo.animal.AnimalType;
@@ -45,24 +43,27 @@ public class Main {
 		//l
 		Zoo.showZooCount();
 		//m
-		
+		Zoo.Mover mover = zoo.new Mover();
+		mover.moveZoo(zoo2);
 		//n
 		zoo.showAnimals();
 		zoo.showEmployees();
 		//o
-		
+		zoo2.showAnimals();
+		zoo2.showEmployees();		
 		//p
-		zoo.releseEmployee(e1);
+		zoo2.releseEmployee(e1);
 		//q
-		zoo.releseEmployee(e2);
+		zoo2.releseEmployee(e2);
 		//r
-		zoo.sellAnimal(a1);
+		zoo2.sellAnimal(a1);
 		//s
-		zoo.sellAnimal(a2);
+		zoo2.sellAnimal(a2);
 		//t
-		zoo.releseEmployee(e4);
+		zoo2.releseEmployee(e4);
 		//u
-
+		zoo2.showAnimals();
+		zoo2.showEmployees();	
 	}
 
 }

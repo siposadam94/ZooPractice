@@ -3,7 +3,6 @@ package zoo.employee;
 import java.time.LocalDate;
 
 import zoo.Sex;
-import zoo.animal.Animal;
 import zoo.animal.AnimalType;
 
 public class GondoZoo extends Employee{

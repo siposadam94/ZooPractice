@@ -5,9 +5,9 @@ import java.time.LocalDate;
 import zoo.Sex;
 
 public abstract class Employee {
-	String name;
-	LocalDate birthDate;
-	Sex sex;
+	private String name;
+	private LocalDate birthDate;
+	private Sex sex;
 	
 	public Employee(String name, LocalDate birthDate, Sex sex) {
 		this.name = name;
