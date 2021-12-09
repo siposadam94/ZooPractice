@@ -4,9 +4,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import zoo.animal.Animal;
+import zoo.animal.AnimalType;
+import zoo.employee.CanDoTask;
+import zoo.employee.Cleaner;
 import zoo.employee.Director;
 import zoo.employee.Employee;
 import zoo.employee.GondoZoo;
@@ -16,12 +21,47 @@ public class Zoo {
 	private static int zooCounter;
 	private Director director;
 	private List<GondoZoo> zookeepers;
+	private List<Cleaner> cleaners;
 	private List<Animal> animals;
+	private List<Task> completedTasks;
 	
 	public List<Animal> getAnimals() {
 		return animals;
 	}
+	
+	public void showCompletedTasks() {
+		for (Task task : completedTasks) {
+			System.out.println(task.toString());
+		}
+	}
 
+	public void addCompletedTask(Employee worker, Task task) {
+		if(worker instanceof CanDoTask) {
+			if (worker instanceof GondoZoo && task instanceof GondoZooTask) {
+				GondoZooTask gondoZooTask = (GondoZooTask)task;
+				gondoZooTask.setGondoZoo((GondoZoo)worker);
+				completedTasks.add(task);
+			}
+			else if (worker instanceof Cleaner && task instanceof CleanerTask) {
+				CleanerTask cleanerTask = (CleanerTask)task;
+				cleanerTask.setCleaner((Cleaner)worker);
+				completedTasks.add(task);
+			}
+			else {
+				System.out.println("Az adott munka nem tartozik a megadott dolgozó munkakörébe!");
+			}
+			
+		} else {
+			System.out.println("Nem végezhet feladatot!");
+		}
+	}
+	
+	public void reward() {
+		for (GondoZoo zookeeper : zookeepers) {
+			zookeeper.reward();
+		}
+	}
+	
 	public void sortAnimals() {
 		//Collections.sort(animals,Comparator.comparing(Animal::getAnimalType).thenComparing(Animal::getNickname));
 		Collections.sort(animals,new Comparator<Animal>() {
@@ -51,13 +91,18 @@ public class Zoo {
 			for (Employee e : zookeepers) {
 				System.out.println("Az állatkert dolgozója: " + e.getName());
 			}
+		}	
+	}
+	// 2.1
+	public void showCleaners() {
+		for (Cleaner cleaner : cleaners) {
+			System.out.println("A takarító neve: " + cleaner.getName() + " aki a " + cleaner.getCleaningArea() + " -t takarítja.");
 		}
-		
 	}
 	
 	public void addEmployee(Employee employee) {
 		if(employee instanceof Director) {
-			if(this.director == null) {
+			if (this.director == null) {
 				this.director = (Director) employee;
 				System.out.println("Az állatkert igazgatója " + director.getName() + " lett!");
 			}else {
@@ -78,16 +123,22 @@ public class Zoo {
 				director = null;
 			}
 		} else {
-			int caredAnimalCounter = 0;
+			Set<AnimalType> missingAnimalTypeSet = new HashSet<>();
 			zookeepers.remove(employee);
-			GondoZoo gondoZoo = (GondoZoo) employee;
-			for (GondoZoo e : zookeepers) {
-				if (e.getCaredAnimalType() == gondoZoo.getCaredAnimalType()) {
-					caredAnimalCounter++;
+			GondoZoo relesedGondoZoo = (GondoZoo) employee;
+			for (AnimalType animalType : relesedGondoZoo.getCaredAnimalType()) {
+				int caredAnimalCounter = 0;
+				for (GondoZoo zookeper : zookeepers) {
+					if(zookeper.getCaredAnimalType().contains(animalType)) {
+						caredAnimalCounter++;
+					}
+				}
+				if(caredAnimalCounter == 0) {
+					missingAnimalTypeSet.add(animalType);
 				}
 			}
-			if (caredAnimalCounter == 0) {
-				System.out.println("Az állatkertnek szüksége van " + gondoZoo.getCaredAnimalType() + " gondozóra!");
+			if(!missingAnimalTypeSet.isEmpty()) {
+				System.out.println("Az állatkertnek szüksége van " + missingAnimalTypeSet + " gondozóra!");
 			}
 		}
 	}
@@ -107,8 +158,9 @@ public class Zoo {
 		boolean ableAdopt = false;
 		
 		for (GondoZoo z : zookeepers) {
-			if(z.getCaredAnimalType() == animal.getAnimalType()) {
+			if (z.getCaredAnimalType().contains(animal.getAnimalType()) ) {
 				ableAdopt = true;
+				break;
 			}
 		}
 		
@@ -138,6 +190,7 @@ public class Zoo {
 		zooCounter++;
 		zookeepers = new ArrayList<>();
 		animals = new ArrayList<>();
+		completedTasks = new ArrayList<>();
 		System.out.println("Az állatkert sajnos még üres!");
 	}
 	

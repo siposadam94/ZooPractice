@@ -6,8 +6,8 @@ import zoo.Sex;
 
 public class Director extends Employee {
 
-	public Director(String name, LocalDate birthDate, Sex sex) {
-		super(name, birthDate, sex);
+	public Director(String name, LocalDate birthDate, Sex sex, LocalDate hireDate) {
+		super(name, birthDate, sex, hireDate);
 	}
 
 }
