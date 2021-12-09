@@ -112,6 +112,9 @@ public class Zoo {
 		else if(employee instanceof GondoZoo) {
 			zookeepers.add((GondoZoo)employee);
 		}
+		else if(employee instanceof Cleaner) {
+			cleaners.add((Cleaner)employee);
+		}
 	}
 	
 	public void releseEmployee(Employee employee) {
@@ -122,6 +125,8 @@ public class Zoo {
 				System.out.println("Az állatkert " + director.getName() + " igazgatója eltávozott!");
 				director = null;
 			}
+		} else if (employee instanceof Cleaner) {
+			cleaners.remove(employee);
 		} else {
 			Set<AnimalType> missingAnimalTypeSet = new HashSet<>();
 			zookeepers.remove(employee);
