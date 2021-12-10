@@ -48,11 +48,11 @@ public class Zoo {
 				completedTasks.add(task);
 			}
 			else {
-				System.out.println("Az adott munka nem tartozik a megadott dolgozó munkakörébe!");
+				System.out.println("Az adott munka nem tartozik a megadott dolgozÃ³ munkakÃ¶rÃ©be!");
 			}
 			
 		} else {
-			System.out.println("Nem végezhet feladatot!");
+			System.out.println("Nem vÃ©gezhet feladatot!");
 		}
 	}
 	
@@ -81,22 +81,22 @@ public class Zoo {
 	
 	public void showEmployees() {
 		if(director != null) {
-			System.out.println("Az állatkert igazgazója: " + director.getName());
+			System.out.println("Az Ã¡llatkert igazgatÃ³ja: " + director.getName());
 		}else {
-			System.out.println("Az állatkertnek nincs jelenleg igazgatója!");
+			System.out.println("Az Ã¡llatkertnek nincs jelenleg igazgatÃ³ja!");
 		}
 		if(zookeepers.isEmpty()) {
-			System.out.println("Az állatkertnek jelenleg nincs dolgozója!");
+			System.out.println("Az Ã¡llatkertnek jelenleg nincs dolgozÃ³ja!");
 		}else {
 			for (Employee e : zookeepers) {
-				System.out.println("Az állatkert dolgozója: " + e.getName());
+				System.out.println("Az Ã¡llatkert dolgozÃ³ja: " + e.getName());
 			}
 		}	
 	}
 	// 2.1
 	public void showCleaners() {
 		for (Cleaner cleaner : cleaners) {
-			System.out.println("A takarító neve: " + cleaner.getName() + " aki a " + cleaner.getCleaningArea() + " -t takarítja.");
+			System.out.println("A takarÃ­tÃ³ neve: " + cleaner.getName() + " aki a " + cleaner.getCleaningArea() + " -t takarÃ­tja.");
 		}
 	}
 	
@@ -104,9 +104,9 @@ public class Zoo {
 		if(employee instanceof Director) {
 			if (this.director == null) {
 				this.director = (Director) employee;
-				System.out.println("Az állatkert igazgatója " + director.getName() + " lett!");
+				System.out.println("Az Ã¡llatkert igazgatï¿½ja " + director.getName() + " lett!");
 			}else {
-				System.out.println("Az állatkertnek jelenleg már van igazgatója!");
+				System.out.println("Az ï¿½llatkertnek jelenleg mÃ¡r van igazgatÃ³ja!");
 			}
 		}
 		else if(employee instanceof GondoZoo) {
@@ -120,9 +120,9 @@ public class Zoo {
 	public void releseEmployee(Employee employee) {
 		if (employee instanceof Director) {
 			if (this.director == null) {
-				System.out.println("Az állatkertnek nincs jelenleg igazgatója!");
+				System.out.println("Az Ã¡llatkertnek nincs jelenleg igazgatÃ³ja!");
 			} else {
-				System.out.println("Az állatkert " + director.getName() + " igazgatója eltávozott!");
+				System.out.println("Az Ã¡llatkert " + director.getName() + " igazgatÃ³ja eltÃ¡vozott!");
 				director = null;
 			}
 		} else if (employee instanceof Cleaner) {
@@ -143,17 +143,17 @@ public class Zoo {
 				}
 			}
 			if(!missingAnimalTypeSet.isEmpty()) {
-				System.out.println("Az állatkertnek szüksége van " + missingAnimalTypeSet + " gondozóra!");
+				System.out.println("Az Ã¡llatkertnek szÃ¼ksÃ©ge van " + missingAnimalTypeSet + " gondozÃ³ra!");
 			}
 		}
 	}
 	
 	public void showAnimals() {
 		if (animals.isEmpty()) {
-			System.out.println("Az állatkert jelenleg üres!");
+			System.out.println("Az Ã¡llatkert jelenleg Ã¼res!");
 		}else {
 			for (Animal a : animals) {
-				System.out.println("Állat fajtája: " + a.getAnimalType() +" neve: " + a.getNickname());
+				System.out.println("Ã¡llat fajtÃ¡ja: " + a.getAnimalType() +" neve: " + a.getNickname());
 			}
 		}
 		
@@ -172,7 +172,7 @@ public class Zoo {
 		if(ableAdopt == true) {
 			animals.add(animal);
 		}else {
-			System.out.println("A(z) " + animal.getAnimalType() + " állatot az állatkert jelenleg nem tudja fogadni");
+			System.out.println("A(z) " + animal.getAnimalType() + " Ã¡llatot az Ã¡llatkert jelenleg nem tudja fogadni");
 		}
 		
 	}
@@ -183,20 +183,21 @@ public class Zoo {
 	
 	
 	public void showAnimalsInZooCount() {
-		System.out.println("Az állatkertnek " + animals.size() + " lakója van jelenleg!");
+		System.out.println("Az Ã¡llatkertnek " + animals.size() + " lakÃ³ja van jelenleg!");
 	}
 	
 	public static void showZooCount() {
-		System.out.println("Az országnak " + zooCounter + " állatkertje van jelenleg!");	
+		System.out.println("Az orszÃ¡gnak " + zooCounter + " Ã¡llatkertje van jelenleg!");	
 	}
 	
 	{
-		System.out.println("Az állatkert megalapulása: " + LocalDate.now());
+		System.out.println("Az Ã¡llatkert megalapulï¿½sa: " + LocalDate.now());
 		zooCounter++;
 		zookeepers = new ArrayList<>();
 		animals = new ArrayList<>();
+		cleaners = new ArrayList<>();
 		completedTasks = new ArrayList<>();
-		System.out.println("Az állatkert sajnos még üres!");
+		System.out.println("Az Ã¡llatkert sajnos mÃ©g Ã¼res!");
 	}
 	
 	static {
