@@ -1,8 +1,8 @@
 package zoo.employee;
 
-import java.time.LocalDate;
-
 import zoo.Sex;
+
+import java.time.LocalDate;
 
 public abstract class Employee {
 	private String name;
@@ -41,6 +41,5 @@ public abstract class Employee {
 	public void setHireDate(LocalDate hireDate) {
 		this.hireDate = hireDate;
 	}
-	
 
 }

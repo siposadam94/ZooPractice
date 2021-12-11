@@ -11,7 +11,6 @@ public class Animal {
 	private Sex sex;
 	
 	public Animal(AnimalType animalType, String nickname, LocalDate birthday, Sex sex) {
-		super();
 		this.animalType = animalType;
 		this.nickname = nickname;
 		this.birthday = birthday;
@@ -41,6 +40,5 @@ public class Animal {
 	public void setSex(Sex sex) {
 		this.sex = sex;
 	}
-	
-	
+
 }

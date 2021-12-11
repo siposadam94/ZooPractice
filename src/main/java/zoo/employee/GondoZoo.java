@@ -1,16 +1,13 @@
 package zoo.employee;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import zoo.Sex;
-import zoo.Task;
 import zoo.animal.AnimalType;
 
-public class GondoZoo extends Employee implements CanDoTask{
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+public class GondoZoo extends NonDirector {
 	
 	private List<AnimalType> caredAnimalType;
 
@@ -31,10 +28,8 @@ public class GondoZoo extends Employee implements CanDoTask{
 	public void reward() {
 		long daysBetween = ChronoUnit.DAYS.between(getHireDate(), LocalDate.now());
 		
-		if(daysBetween >= 5 * 365) {
+		if (daysBetween >= 5 * 365) {
 			System.out.println(getName() + " jutalmat kap!");
 		}
-		
 	}
-
 }
