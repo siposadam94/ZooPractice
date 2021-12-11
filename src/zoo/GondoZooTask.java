@@ -43,7 +43,7 @@ public class GondoZooTask implements Task {
 
 	@Override
 	public String toString() {
-		return gondoZoo.getName() + " elvÈgezte a " + task + " gondoz·s·t " + jobTime + " kor";
+		return gondoZoo.getName() + " elv√©gezte a " + task + " gondoz√°s√°t " + jobTime + " kor";
 	}
 	
 }

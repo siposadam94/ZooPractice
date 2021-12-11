@@ -42,7 +42,7 @@ public class CleanerTask implements Task {
 
 	@Override
 	public String toString() {
-		return cleaner.getName() + " elvÈgezte a " + task + " takarit·s·t " + jobTime + " kor";
+		return cleaner.getName() + " elv√©gezte a " + task + " takarit√°s√°t " + jobTime + " kor";
 	}
 
 }

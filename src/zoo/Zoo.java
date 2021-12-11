@@ -104,9 +104,9 @@ public class Zoo {
 		if(employee instanceof Director) {
 			if (this.director == null) {
 				this.director = (Director) employee;
-				System.out.println("Az állatkert igazgat�ja " + director.getName() + " lett!");
+				System.out.println("Az állatkert igazgatója " + director.getName() + " lett!");
 			}else {
-				System.out.println("Az �llatkertnek jelenleg már van igazgatója!");
+				System.out.println("Az állatkertnek jelenleg már van igazgatója!");
 			}
 		}
 		else if(employee instanceof GondoZoo) {
@@ -191,7 +191,7 @@ public class Zoo {
 	}
 	
 	{
-		System.out.println("Az állatkert megalapul�sa: " + LocalDate.now());
+		System.out.println("Az állatkert megalapulása: " + LocalDate.now());
 		zooCounter++;
 		zookeepers = new ArrayList<>();
 		animals = new ArrayList<>();
