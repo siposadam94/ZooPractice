@@ -9,19 +9,19 @@ import java.util.List;
 
 public class GondoZoo extends NonDirector {
 	
-	private List<AnimalType> caredAnimalType;
+	private List<AnimalType> caredAnimalTypes;
 
 	public GondoZoo(String name, LocalDate birthDate, Sex sex, List<AnimalType> caredAnimalType, LocalDate hireDate) {
 		super(name, birthDate, sex, hireDate);
-		this.caredAnimalType = caredAnimalType;
+		this.caredAnimalTypes = caredAnimalType;
 	}
 
-	public List<AnimalType> getCaredAnimalType() {
-		return caredAnimalType;
+	public List<AnimalType> getCaredAnimalTypes() {
+		return caredAnimalTypes;
 	}
 
-	public void setCaredAnimalType(List<AnimalType> caredAnimalType) {
-		this.caredAnimalType = caredAnimalType;
+	public void setCaredAnimalTypes(List<AnimalType> caredAnimalTypes) {
+		this.caredAnimalTypes = caredAnimalTypes;
 	}
 
 	@Override

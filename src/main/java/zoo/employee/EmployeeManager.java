@@ -67,11 +67,11 @@ public class EmployeeManager {
 			Set<AnimalType> missingAnimalTypeSet = new HashSet<>();
 			workers.remove(employee);
 			GondoZoo releasedCondoZoo = (GondoZoo) employee;
-			for (AnimalType animalType : releasedCondoZoo.getCaredAnimalType()) {
+			for (AnimalType animalType : releasedCondoZoo.getCaredAnimalTypes()) {
 				int caredAnimalCounter = 0;
 				for (NonDirector worker : workers) {
 					if (worker instanceof GondoZoo) {
-						if (((GondoZoo)worker).getCaredAnimalType().contains(animalType)) {
+						if (((GondoZoo)worker).getCaredAnimalTypes().contains(animalType)) {
 							caredAnimalCounter++;
 						}
 					}

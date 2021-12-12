@@ -2,6 +2,7 @@ package zoo;
 
 import zoo.animal.Animal;
 import zoo.animal.AnimalType;
+import zoo.detail.*;
 import zoo.employee.Cleaner;
 import zoo.employee.Director;
 import zoo.employee.Employee;
@@ -63,39 +64,111 @@ public class Main {
 		zoo.addCompletedTask(e2, new GondoZooTask(AnimalType.RHINO));
 //		d)
 		zoo.showCompletedTasks();
-		//k
-		Zoo zoo2 = new Zoo();
-		//l
-		Zoo.showZooCount();
-		//m
-		Zoo.Mover mover = zoo.new Mover();
-		mover.moveZoo(zoo2);
-		//n
-		zoo.showAnimals();
-		zoo.showEmployees();
-		//o
-		zoo2.showAnimals();
-		zoo2.showEmployees();	
-		//p
-		zoo2.releseEmployee(e1);
-		//q
-		zoo2.releseEmployee(e2);
-		//r
-		zoo2.sellAnimal(a1);
-		//s
-		zoo2.sellAnimal(a2);
-		//t
-		zoo2.releseEmployee(e4);
-		//u
-		zoo2.showAnimals();
-		zoo2.showEmployees();	
-		
-		zoo2.addCompletedTask(e2,new GondoZooTask(AnimalType.RHINO));
-		zoo2.addCompletedTask(e2,new GondoZooTask(AnimalType.GORILLA));
-		
-		zoo2.showCompletedTasks();
 
-		zoo2.reward();
-		
+		//3.feladat
+		//3as feladatsor
+//		Hozzon létre négy élőlény leírást tartalmazó objektumot, majd ezeket felhasználva hozzon létre
+//		hat látogató helyet az állatkertben. Az egyik látogató helyhez hozzon létre egy új gondozót,
+//				akit nem vesz fel az állatkert dolgozói közé. Egy másik látogató helynél pedig
+//		egy olyan gondozót adjon hozzá, amely nem gondozza az adott állatfajt.
+
+		DetailBox<Detail> detail1 = new DetailBox<>(
+				new DetailAnimal("Europe", false, 19, 4, DetailAnimal.BasicAnimalClass.MAMMAL)
+		);
+		DetailBox<Detail> detail2 = new DetailBox<>(
+				new DetailAnimal("Asia", false, 17, 4, DetailAnimal.BasicAnimalClass.MAMMAL)
+		);
+		DetailBox<Detail> detail3 = new DetailBox<>(
+				new DetailAnimal("Africa", true, 27, 4, DetailAnimal.BasicAnimalClass.REPTILE)
+		);
+		DetailBox<Detail> detail4 = new DetailBox<>(
+				new DetailPlant("Asia", "sand", false, DetailPlant.Season.FALL, 30,false)
+		);
+
+		VisitablePlace visitablePlace1 = new VisitablePlace();
+		visitablePlace1.setAnimals(Arrays.asList(a1));
+		visitablePlace1.setDetail(detail1);
+		visitablePlace1.setCoordinate(new Coordinate(112.242,1521.224));
+		visitablePlace1.setAnimalType(AnimalType.RHINO);
+		visitablePlace1.setEmployee(e2);
+		try {
+			zoo.addVisitablePlace(visitablePlace1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		VisitablePlace visitablePlace2 = new VisitablePlace();
+		visitablePlace2.setAnimals(Arrays.asList(a2));
+		visitablePlace2.setDetail(detail2);
+		visitablePlace2.setCoordinate(new Coordinate(1712.242,8521.84));
+		visitablePlace2.setAnimalType(AnimalType.ELEPHANT);
+		visitablePlace2.setEmployee(e2);
+		try {
+			zoo.addVisitablePlace(visitablePlace2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		VisitablePlace visitablePlace3 = new VisitablePlace();
+		visitablePlace3.setAnimals(Arrays.asList(a1));
+		visitablePlace3.setDetail(detail3);
+		visitablePlace3.setCoordinate(new Coordinate(1712.242,8521.84));
+		visitablePlace3.setAnimalType(AnimalType.ELEPHANT);
+		visitablePlace3.setEmployee(
+				new GondoZoo("Nem itt dolgozó", LocalDate.of(1993,12,07), Sex.MALE, Arrays.asList(AnimalType.ELEPHANT), LocalDate.now()));
+		try {
+			zoo.addVisitablePlace(visitablePlace3);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		VisitablePlace visitablePlace4 = new VisitablePlace();
+		visitablePlace4.setDetail(detail4);
+		visitablePlace4.setCoordinate(new Coordinate(9712.242,9521.84));
+		visitablePlace4.setAnimalType(AnimalType.LION);
+
+		try {
+			zoo.addVisitablePlace(visitablePlace4);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		zoo.showSpecificAnimalsByType(AnimalType.ELEPHANT);
+
+
+//		//k
+//		Zoo zoo2 = new Zoo();
+//		//l
+//		Zoo.showZooCount();
+//		//m
+//		Zoo.Mover mover = zoo.new Mover();
+//		mover.moveZoo(zoo2);
+//		//n
+//		zoo.showAnimals();
+//		zoo.showEmployees();
+//		//o
+//		zoo2.showAnimals();
+//		zoo2.showEmployees();
+//		//p
+//		zoo2.releseEmployee(e1);
+//		//q
+//		zoo2.releseEmployee(e2);
+//		//r
+//		zoo2.sellAnimal(a1);
+//		//s
+//		zoo2.sellAnimal(a2);
+//		//t
+//		zoo2.releseEmployee(e4);
+//		//u
+//		zoo2.showAnimals();
+//		zoo2.showEmployees();
+//
+//		zoo2.addCompletedTask(e2,new GondoZooTask(AnimalType.RHINO));
+//		zoo2.addCompletedTask(e2,new GondoZooTask(AnimalType.GORILLA));
+//
+//		zoo2.showCompletedTasks();
+//
+//		zoo2.reward();
+
 	}
 }

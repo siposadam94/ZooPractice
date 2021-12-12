@@ -41,4 +41,8 @@ public class Animal {
 		this.sex = sex;
 	}
 
+	public String getAnimalTypeString() {
+		return animalType.toString();
+	}
+
 }

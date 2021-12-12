@@ -1,6 +1,7 @@
 package zoo;
 
 import zoo.animal.Animal;
+import zoo.animal.AnimalType;
 import zoo.employee.*;
 
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class Zoo {
 			animals.clear();
 			employeeManager.setDirector(null);
 			employeeManager.getWorkers().clear();
+//			visitablePlaces.clear();
 		}
 	}
 	
@@ -34,6 +36,7 @@ public class Zoo {
 	private EmployeeManager employeeManager;
 	private List<Animal> animals;
 	private List<Task> completedTasks;
+	private List<VisitablePlace> visitablePlaces;
 
 	{
 		System.out.println("Az állatkert megalapulása: " + LocalDate.now());
@@ -41,6 +44,7 @@ public class Zoo {
 		employeeManager = new EmployeeManager();
 		animals = new ArrayList<>();
 		completedTasks = new ArrayList<>();
+		visitablePlaces = new ArrayList<>();
 		System.out.println("Az állatkert sajnos még üres!");
 	}
 
@@ -120,18 +124,28 @@ public class Zoo {
 		if (animals.isEmpty()) {
 			System.out.println("Az állatkert jelenleg üres!");
 		} else {
-			for (Animal a : animals) {
-				System.out.println("állat fajtája: " + a.getAnimalType() +" neve: " + a.getNickname());
-			}
+			animals.stream()
+					.sorted(Comparator.comparing(Animal::getAnimalTypeString))
+					.forEach(a -> System.out.println(a.getNickname()));
 		}
 	}
-	
+
+	public void showSpecificAnimalsByType(AnimalType animalType) {
+		if (animals.isEmpty()) {
+			System.out.println("Az állatkert jelenleg üres!");
+		} else {
+			animals.stream()
+					.filter(a -> a.getAnimalType().equals(animalType))
+					.forEach(a -> System.out.println(a.getNickname()));
+		}
+	}
+
 	public void addAnimal(Animal animal) {
 		boolean ableAdopt = false;
 		
 		for (NonDirector employee : employeeManager.getWorkers()) {
 			if (employee instanceof GondoZoo ) {
-				if (((GondoZoo) employee).getCaredAnimalType().contains(animal.getAnimalType())) {
+				if (((GondoZoo) employee).getCaredAnimalTypes().contains(animal.getAnimalType())) {
 					ableAdopt = true;
 					break;
 				}
@@ -152,5 +166,27 @@ public class Zoo {
 
 	public void showAnimalsInZooCount() {
 		System.out.println("Az állatkertnek " + animals.size() + " lakója van jelenleg!");
+	}
+
+	public void addVisitablePlace(VisitablePlace place) throws Exception {
+
+		if (place.getEmployee() != null) {
+			if (!(place.getEmployee() instanceof GondoZoo)) {
+				throw new Exception();
+			}
+
+			if (!employeeManager.getWorkers().contains( place.getEmployee() )) {
+				throw new Exception();
+			}
+
+			if(place.getAnimalType() != null) {
+				if (!((GondoZoo)place.getEmployee()).getCaredAnimalTypes().contains(place.getAnimalType())) {
+					throw new Exception();
+				}
+			}
+
+		}
+
+		visitablePlaces.add(place);
 	}
 }
