@@ -1,13 +1,16 @@
 package zoo.employee;
 
 import zoo.animal.AnimalType;
+import zoo.exception.GondozooNotAvailable;
+import zoo.exception.ZooEmployeeException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.*;
 
-public class EmployeeManager {
+public class EmployeeManager implements Serializable {
 	
 	private Director director;
 	private List<NonDirector> workers;
@@ -53,10 +56,20 @@ public class EmployeeManager {
 		}
 	}
 
-	public void releseEmployee(Employee employee) {
+	public void releaseEmployee(Employee employee) throws ZooEmployeeException {
+
+		Properties prop = new Properties();
+		try (InputStream input = new FileInputStream("src/main/resources/config.properties")) {
+			prop.load(input);
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
 		if (employee instanceof Director) {
 			if (this.director == null) {
-				System.out.println("Az állatkertnek nincs jelenleg igazgatója!");
+//				System.out.println("Az állatkertnek nincs jelenleg igazgatója!");
+				throw new ZooEmployeeException(prop.getProperty("error.zooEmployeeExceptionDirector"));
 			} else {
 				System.out.println("Az állatkert " + director.getName() + " igazgatója eltávozott!");
 				director = null;
@@ -81,7 +94,10 @@ public class EmployeeManager {
 				}
 			}
 			if (!missingAnimalTypeSet.isEmpty()) {
-				System.out.println("Az állatkertnek szüksége van " + missingAnimalTypeSet + " gondozóra!");
+
+					throw new ZooEmployeeException( prop.getProperty("error.zooEmployeeExceptionGondozoo") );
+
+//				System.out.println("Az állatkertnek szüksége van " + missingAnimalTypeSet + " gondozóra!");
 			}
 		}
 	}

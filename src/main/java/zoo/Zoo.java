@@ -3,14 +3,15 @@ package zoo;
 import zoo.animal.Animal;
 import zoo.animal.AnimalType;
 import zoo.employee.*;
+import zoo.exception.GondozooNotAvailable;
+import zoo.exception.ZooEmployeeException;
+import zoo.exception.ZooException;
 
+import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-public class Zoo {
+public class Zoo implements Serializable {
 
 	class Mover {
 		public void moveZoo(Zoo zoo) {
@@ -27,7 +28,7 @@ public class Zoo {
 		}
 	}
 	
-	private static int zooCounter;
+	private static int zooCounter = 0;
 
 	static {
 		showZooCount();
@@ -53,6 +54,8 @@ public class Zoo {
 	public List<Animal> getAnimals() {
 		return animals;
 	}
+
+	public EmployeeManager getEmployeeManager() { return employeeManager; }
 
 	public static void showZooCount() {
 		System.out.println("Az országnak " + zooCounter + " állatkertje van jelenleg!");
@@ -113,7 +116,13 @@ public class Zoo {
 	}
 	
 	public void releseEmployee(Employee employee) {
-		employeeManager.releseEmployee(employee);
+		try {
+			employeeManager.releaseEmployee(employee);
+		} catch (ZooException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void reward() {
@@ -155,7 +164,23 @@ public class Zoo {
 		if (ableAdopt == true) {
 			animals.add(animal);
 		} else {
-			System.out.println("A(z) " + animal.getAnimalType() + " állatot az állatkert jelenleg nem tudja fogadni");
+			try {
+				try (InputStream input = new FileInputStream("src/main/resources/config.properties")) {
+					Properties prop = new Properties();
+
+					prop.load(input);
+
+					throw new GondozooNotAvailable( prop.getProperty("error.gondozooNotAvailable") );
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+
+			} catch (ZooException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+//			System.out.println("A(z) " + animal.getAnimalType() + " állatot az állatkert jelenleg nem tudja fogadni");
 		}
 		
 	}
@@ -184,9 +209,7 @@ public class Zoo {
 					throw new Exception();
 				}
 			}
-
 		}
-
 		visitablePlaces.add(place);
 	}
 }

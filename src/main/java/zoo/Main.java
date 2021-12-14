@@ -40,7 +40,7 @@ public class Main {
 		zoo.showAnimals();
 		//j
 		zoo.sortAnimals();
-		
+
 		//2es feladatsor
 
 // 		a)
@@ -135,6 +135,7 @@ public class Main {
 
 		zoo.showSpecificAnimalsByType(AnimalType.ELEPHANT);
 
+		ZooSaver.saveZoo(zoo);
 
 //		//k
 //		Zoo zoo2 = new Zoo();
@@ -169,6 +170,11 @@ public class Main {
 //		zoo2.showCompletedTasks();
 //
 //		zoo2.reward();
+
+		Zoo zoo3 = ZooSaver.loadZoo();
+		System.out.println("LOAD");
+		zoo3.showAnimals();
+		zoo3.getEmployeeManager().showCleaners();
 
 	}
 }

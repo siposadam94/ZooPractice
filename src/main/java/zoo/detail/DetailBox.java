@@ -1,6 +1,8 @@
 package zoo.detail;
 
-public class DetailBox <T> {
+import java.io.Serializable;
+
+public class DetailBox <T> implements Serializable {
     private T t;
 
     public DetailBox(T t) {

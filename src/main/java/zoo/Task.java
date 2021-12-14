@@ -2,5 +2,7 @@ package zoo;
 
 import zoo.animal.AnimalType;
 
-public interface Task {
+import java.io.Serializable;
+
+public interface Task extends Serializable {
 }

@@ -2,9 +2,10 @@ package zoo.employee;
 
 import zoo.Sex;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class Employee {
+public abstract class Employee implements Serializable {
 	private String name;
 	private LocalDate birthDate;
 	private Sex sex;

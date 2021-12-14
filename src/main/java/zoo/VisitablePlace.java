@@ -7,9 +7,10 @@ import zoo.detail.Detail;
 import zoo.detail.DetailBox;
 import zoo.employee.Employee;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class VisitablePlace {
+public class VisitablePlace implements Serializable {
 
    private List<Animal> animals;
    private AnimalType animalType;

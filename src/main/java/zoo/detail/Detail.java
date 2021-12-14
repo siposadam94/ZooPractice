@@ -1,4 +1,6 @@
 package zoo.detail;
 
-public abstract class Detail {
+import java.io.Serializable;
+
+public abstract class Detail implements Serializable {
 }
