@@ -78,11 +78,12 @@ public class Main {
 
 		//3.feladat 3.rész
 
-		VisitablePlace visitablePlace1 = new VisitablePlace(
+		VisitablePlace<DetailAnimal> visitablePlace1 = new VisitablePlace<>(
 				AnimalType.RHINO,
 				e2,
 				new Coordinate(112.242,1521.224),
-				new DetailAnimal("Europe", false, 19, 4, DetailAnimal.BasicAnimalClass.MAMMAL));
+				new DetailAnimal("Europe", false, 19, 4, DetailAnimal.BasicAnimalClass.MAMMAL)
+		);
 		visitablePlace1.setAnimals(Arrays.asList(a1));
 
 		try {
@@ -91,7 +92,7 @@ public class Main {
 			System.out.println("Error: " + e.getMessage());
 		}
 
-		VisitablePlace visitablePlace2 = new VisitablePlace(
+		VisitablePlace<DetailAnimal> visitablePlace2 = new VisitablePlace<>(
 				AnimalType.ELEPHANT,
 				e2,
 				new Coordinate(453.242,6521.224),
@@ -111,7 +112,7 @@ public class Main {
 				Arrays.asList(AnimalType.ELEPHANT),
 				LocalDate.now());
 
-		VisitablePlace visitablePlace3 = new VisitablePlace(
+		VisitablePlace<DetailAnimal> visitablePlace3 = new VisitablePlace<>(
 				AnimalType.ELEPHANT,
 				tempEmployee,
 				new Coordinate(1712.242,8521.84),
@@ -125,7 +126,7 @@ public class Main {
 			System.out.println("Error: " + e.getMessage());
 		}
 
-		VisitablePlace visitablePlace4 = new VisitablePlace(
+		VisitablePlace<DetailAnimal> visitablePlace4 = new VisitablePlace<>(
 				AnimalType.LION,
 				e2,
 				new Coordinate(6712.242,5721.84),
