@@ -1,8 +1,8 @@
-package zoo;
+package zoo.task;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import zoo.CleaningArea;
 import zoo.employee.Cleaner;
 
 public class CleanerTask implements Task {

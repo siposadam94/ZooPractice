@@ -1,4 +1,4 @@
-package zoo;
+package zoo.task;
 
 import zoo.animal.AnimalType;
 

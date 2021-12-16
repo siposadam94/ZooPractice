@@ -1,7 +1,5 @@
 package zoo.employee;
 
-import zoo.Task;
-
 /**
  * Not used
  */

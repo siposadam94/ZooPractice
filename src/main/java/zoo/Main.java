@@ -7,9 +7,15 @@ import zoo.employee.Cleaner;
 import zoo.employee.Director;
 import zoo.employee.Employee;
 import zoo.employee.GondoZoo;
+import zoo.task.CleanerTask;
+import zoo.task.GondoZooTask;
+import zoo.ticket.Booking;
+import zoo.ticket.BookingThread;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
 
@@ -135,44 +141,54 @@ public class Main {
 
 		ZooSaver.saveZoo(zoo);
 
-//		//k
-//		Zoo zoo2 = new Zoo();
-//		//l
-//		Zoo.showZooCount();
-//		//m
-//		Zoo.Mover mover = zoo.new Mover();
-//		mover.moveZoo(zoo2);
-//		//n
-//		zoo.showAnimals();
-//		zoo.showEmployees();
-//		//o
-//		zoo2.showAnimals();
-//		zoo2.showEmployees();
-//		//p
-//		zoo2.releseEmployee(e1);
-//		//q
-//		zoo2.releseEmployee(e2);
-//		//r
-//		zoo2.sellAnimal(a1);
-//		//s
-//		zoo2.sellAnimal(a2);
-//		//t
-//		zoo2.releseEmployee(e4);
-//		//u
-//		zoo2.showAnimals();
-//		zoo2.showEmployees();
-//
-//		zoo2.addCompletedTask(e2,new GondoZooTask(AnimalType.RHINO));
-//		zoo2.addCompletedTask(e2,new GondoZooTask(AnimalType.GORILLA));
-//
-//		zoo2.showCompletedTasks();
-//
-//		zoo2.reward();
+		//k
+		Zoo zoo2 = new Zoo();
+		//l
+		Zoo.showZooCount();
+		//m
+		Zoo.Mover mover = zoo.new Mover();
+		mover.moveZoo(zoo2);
+		//n
+		zoo.showAnimals();
+		zoo.showEmployees();
+		//o
+		zoo2.showAnimals();
+		zoo2.showEmployees();
+		//p
+		zoo2.releseEmployee(e1);
+		//q
+		zoo2.releseEmployee(e2);
+		//r
+		zoo2.sellAnimal(a1);
+		//s
+		zoo2.sellAnimal(a2);
+		//t
+		zoo2.releseEmployee(e4);
+		//u
+		zoo2.showAnimals();
+		zoo2.showEmployees();
+
+		zoo2.addCompletedTask(e2,new GondoZooTask(AnimalType.RHINO));
+		zoo2.addCompletedTask(e2,new GondoZooTask(AnimalType.GORILLA));
+
+		zoo2.showCompletedTasks();
+
+		zoo2.reward();
 
 		Zoo zoo3 = ZooSaver.loadZoo();
 
 		zoo3.showAnimals();
 		zoo3.getEmployeeManager().showCleaners();
+
+		try {
+			BookingThread.runOneThread(zoo3);
+			BookingThread.runTwoThread(zoo3);
+			BookingThread.runFourThread(zoo3);
+			BookingThread.runExecutor(zoo3);
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 	}
 }

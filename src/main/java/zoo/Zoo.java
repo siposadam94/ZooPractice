@@ -4,7 +4,11 @@ import zoo.animal.Animal;
 import zoo.animal.AnimalType;
 import zoo.employee.*;
 import zoo.exception.GondozooNotAvailable;
+import zoo.exception.ZooEmployeeException;
 import zoo.exception.ZooException;
+import zoo.task.CleanerTask;
+import zoo.task.GondoZooTask;
+import zoo.task.Task;
 import zoo.ticket.Booking;
 
 import java.io.*;
@@ -120,8 +124,8 @@ public class Zoo implements Serializable {
 	public void releseEmployee(Employee employee) {
 		try {
 			employeeManager.releaseEmployee(employee);
-		} catch (ZooException e) {
-			e.printStackTrace();
+		} catch (ZooEmployeeException e) {
+			System.out.println(e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

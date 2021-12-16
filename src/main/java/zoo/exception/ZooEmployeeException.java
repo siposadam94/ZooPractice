@@ -3,13 +3,17 @@ package zoo.exception;
 public class ZooEmployeeException extends ZooException {
 
     public enum ZooEmployeeExType {
-        NoGondozoo("Gondozó elbocsátáskor az általa gondozott állatokat nem tudja az állatkert tovább gondozni"),
-        NoDirector("Igazgató elbocsátás után az állatkertnek nincs igazgatója");
+        NoGondozoo("ERROR: Gondozó elbocsátáskor az általa gondozott állatokat nem tudja az állatkert tovább gondozni"),
+        NoDirector("ERROR: Igazgató elbocsátás után az állatkertnek nincs igazgatója");
 
         private final String errorCode;
 
         ZooEmployeeExType(String errorCode) {
             this.errorCode = errorCode;
+        }
+
+        public String getErrorCode() {
+            return errorCode;
         }
     }
 
@@ -19,4 +23,8 @@ public class ZooEmployeeException extends ZooException {
         this.zooEmployeeExType = zooEmployeeExType;
     }
 
+    @Override
+    public String getMessage() {
+        return zooEmployeeExType.getErrorCode();
+    }
 }

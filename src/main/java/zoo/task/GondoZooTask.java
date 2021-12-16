@@ -1,7 +1,5 @@
-package zoo;
+package zoo.task;
 
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import zoo.animal.AnimalType;
