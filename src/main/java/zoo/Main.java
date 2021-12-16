@@ -65,72 +65,70 @@ public class Main {
 //		d)
 		zoo.showCompletedTasks();
 
-		//3.feladat
-		//3as feladatsor
-//		Hozzon létre négy élőlény leírást tartalmazó objektumot, majd ezeket felhasználva hozzon létre
-//		hat látogató helyet az állatkertben. Az egyik látogató helyhez hozzon létre egy új gondozót,
-//				akit nem vesz fel az állatkert dolgozói közé. Egy másik látogató helynél pedig
-//		egy olyan gondozót adjon hozzá, amely nem gondozza az adott állatfajt.
+		// PRÓBA 2/2 part
+//		DetailBox<Detail> detail2 = new DetailBox<>(
+//				new DetailAnimal("Asia", false, 17, 4, DetailAnimal.BasicAnimalClass.MAMMAL)
+//		);
 
-		DetailBox<Detail> detail1 = new DetailBox<>(
-				new DetailAnimal("Europe", false, 19, 4, DetailAnimal.BasicAnimalClass.MAMMAL)
-		);
-		DetailBox<Detail> detail2 = new DetailBox<>(
-				new DetailAnimal("Asia", false, 17, 4, DetailAnimal.BasicAnimalClass.MAMMAL)
-		);
-		DetailBox<Detail> detail3 = new DetailBox<>(
-				new DetailAnimal("Africa", true, 27, 4, DetailAnimal.BasicAnimalClass.REPTILE)
-		);
-		DetailBox<Detail> detail4 = new DetailBox<>(
-				new DetailPlant("Asia", "sand", false, DetailPlant.Season.FALL, 30,false)
-		);
+		//3.feladat 3.rész
 
-		VisitablePlace visitablePlace1 = new VisitablePlace();
+		VisitablePlace visitablePlace1 = new VisitablePlace(
+				AnimalType.RHINO,
+				e2,
+				new Coordinate(112.242,1521.224),
+				new DetailAnimal("Europe", false, 19, 4, DetailAnimal.BasicAnimalClass.MAMMAL));
 		visitablePlace1.setAnimals(Arrays.asList(a1));
-		visitablePlace1.setDetail(detail1);
-		visitablePlace1.setCoordinate(new Coordinate(112.242,1521.224));
-		visitablePlace1.setAnimalType(AnimalType.RHINO);
-		visitablePlace1.setEmployee(e2);
+
 		try {
 			zoo.addVisitablePlace(visitablePlace1);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Error: " + e.getMessage());
 		}
 
-		VisitablePlace visitablePlace2 = new VisitablePlace();
+		VisitablePlace visitablePlace2 = new VisitablePlace(
+				AnimalType.ELEPHANT,
+				e2,
+				new Coordinate(453.242,6521.224),
+				new DetailAnimal("Europe", false, 19, 4, DetailAnimal.BasicAnimalClass.MAMMAL));
 		visitablePlace2.setAnimals(Arrays.asList(a2));
-		visitablePlace2.setDetail(detail2);
-		visitablePlace2.setCoordinate(new Coordinate(1712.242,8521.84));
-		visitablePlace2.setAnimalType(AnimalType.ELEPHANT);
-		visitablePlace2.setEmployee(e2);
+
 		try {
 			zoo.addVisitablePlace(visitablePlace2);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Error: " + e.getMessage());
 		}
 
-		VisitablePlace visitablePlace3 = new VisitablePlace();
-		visitablePlace3.setAnimals(Arrays.asList(a1));
-		visitablePlace3.setDetail(detail3);
-		visitablePlace3.setCoordinate(new Coordinate(1712.242,8521.84));
-		visitablePlace3.setAnimalType(AnimalType.ELEPHANT);
-		visitablePlace3.setEmployee(
-				new GondoZoo("Nem itt dolgozó", LocalDate.of(1993,12,07), Sex.MALE, Arrays.asList(AnimalType.ELEPHANT), LocalDate.now()));
+		Employee tempEmployee = new GondoZoo(
+				"Nem itt dolgozó",
+				LocalDate.of(1993,12,07),
+				Sex.MALE,
+				Arrays.asList(AnimalType.ELEPHANT),
+				LocalDate.now());
+
+		VisitablePlace visitablePlace3 = new VisitablePlace(
+				AnimalType.ELEPHANT,
+				tempEmployee,
+				new Coordinate(1712.242,8521.84),
+				new DetailAnimal("Africa", false, 19, 4, DetailAnimal.BasicAnimalClass.MAMMAL));
+		visitablePlace3.setAnimals(Arrays.asList(a2));
+
+
 		try {
 			zoo.addVisitablePlace(visitablePlace3);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Error: " + e.getMessage());
 		}
 
-		VisitablePlace visitablePlace4 = new VisitablePlace();
-		visitablePlace4.setDetail(detail4);
-		visitablePlace4.setCoordinate(new Coordinate(9712.242,9521.84));
-		visitablePlace4.setAnimalType(AnimalType.LION);
+		VisitablePlace visitablePlace4 = new VisitablePlace(
+				AnimalType.LION,
+				e2,
+				new Coordinate(6712.242,5721.84),
+				new DetailAnimal("Africa", true, 19, 4, DetailAnimal.BasicAnimalClass.MAMMAL));
 
 		try {
 			zoo.addVisitablePlace(visitablePlace4);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Error: " + e.getMessage());
 		}
 
 		zoo.showSpecificAnimalsByType(AnimalType.ELEPHANT);
@@ -172,7 +170,7 @@ public class Main {
 //		zoo2.reward();
 
 		Zoo zoo3 = ZooSaver.loadZoo();
-		System.out.println("LOAD");
+
 		zoo3.showAnimals();
 		zoo3.getEmployeeManager().showCleaners();
 

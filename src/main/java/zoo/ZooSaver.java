@@ -12,6 +12,7 @@ public class ZooSaver implements Serializable {
         try {
             oos = new ObjectOutputStream( new FileOutputStream("zoo.tmp",false) );
             oos.writeObject(zoo);
+            System.out.println("Az állatkert kimentve a zoo.tmp fileba");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -27,7 +28,7 @@ public class ZooSaver implements Serializable {
 
     public static Zoo loadZoo() {
 
-        Zoo loadedZoo = null;
+        Zoo loadedZoo = new Zoo();
         ObjectInputStream ois = null;
         try {
             ois = new ObjectInputStream( new FileInputStream("zoo.tmp") );

@@ -4,8 +4,8 @@ import zoo.animal.Animal;
 import zoo.animal.AnimalType;
 import zoo.employee.*;
 import zoo.exception.GondozooNotAvailable;
-import zoo.exception.ZooEmployeeException;
 import zoo.exception.ZooException;
+import zoo.ticket.Booking;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -24,7 +24,7 @@ public class Zoo implements Serializable {
 			animals.clear();
 			employeeManager.setDirector(null);
 			employeeManager.getWorkers().clear();
-//			visitablePlaces.clear();
+
 		}
 	}
 	
@@ -38,6 +38,7 @@ public class Zoo implements Serializable {
 	private List<Animal> animals;
 	private List<Task> completedTasks;
 	private List<VisitablePlace> visitablePlaces;
+	private List<Booking> bookings;
 
 	{
 		System.out.println("Az állatkert megalapulása: " + LocalDate.now());
@@ -47,15 +48,16 @@ public class Zoo implements Serializable {
 		completedTasks = new ArrayList<>();
 		visitablePlaces = new ArrayList<>();
 		System.out.println("Az állatkert sajnos még üres!");
+
+		//thread booking
+		bookings = Collections.synchronizedList(new ArrayList<>());
 	}
 
 	//Place for constructors
 
-	public List<Animal> getAnimals() {
-		return animals;
+	public synchronized void addBooking(Booking booking) {
+		bookings.add(booking);
 	}
-
-	public EmployeeManager getEmployeeManager() { return employeeManager; }
 
 	public static void showZooCount() {
 		System.out.println("Az országnak " + zooCounter + " állatkertje van jelenleg!");
@@ -175,8 +177,8 @@ public class Zoo implements Serializable {
 					ex.printStackTrace();
 				}
 
-			} catch (ZooException e) {
-				e.printStackTrace();
+			} catch (GondozooNotAvailable e) {
+				System.out.println(e.getMessage());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -193,23 +195,32 @@ public class Zoo implements Serializable {
 		System.out.println("Az állatkertnek " + animals.size() + " lakója van jelenleg!");
 	}
 
+	//Milyen hibát dobjanak? 3/2 feladat és hol kezeljem
 	public void addVisitablePlace(VisitablePlace place) throws Exception {
 
 		if (place.getEmployee() != null) {
 			if (!(place.getEmployee() instanceof GondoZoo)) {
-				throw new Exception();
+				throw new Exception("A megadott dolgozó nem GondoZoo!");
 			}
 
 			if (!employeeManager.getWorkers().contains( place.getEmployee() )) {
-				throw new Exception();
+				throw new Exception("A megadott gondoZoo nem dolgozik az állatkertben!");
 			}
 
 			if(place.getAnimalType() != null) {
 				if (!((GondoZoo)place.getEmployee()).getCaredAnimalTypes().contains(place.getAnimalType())) {
-					throw new Exception();
+					throw new Exception("A megadott gondoZoo nem foglalkozik ezzel az állattal!");
 				}
 			}
 		}
 		visitablePlaces.add(place);
 	}
+
+	public List<Animal> getAnimals() {
+		return animals;
+	}
+
+	public List<Booking> getBookings() { return bookings; }
+
+	public EmployeeManager getEmployeeManager() { return employeeManager; }
 }

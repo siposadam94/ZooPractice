@@ -68,8 +68,7 @@ public class EmployeeManager implements Serializable {
 
 		if (employee instanceof Director) {
 			if (this.director == null) {
-//				System.out.println("Az állatkertnek nincs jelenleg igazgatója!");
-				throw new ZooEmployeeException(prop.getProperty("error.zooEmployeeExceptionDirector"));
+				throw new ZooEmployeeException(ZooEmployeeException.ZooEmployeeExType.NoDirector);
 			} else {
 				System.out.println("Az állatkert " + director.getName() + " igazgatója eltávozott!");
 				director = null;
@@ -94,10 +93,7 @@ public class EmployeeManager implements Serializable {
 				}
 			}
 			if (!missingAnimalTypeSet.isEmpty()) {
-
-					throw new ZooEmployeeException( prop.getProperty("error.zooEmployeeExceptionGondozoo") );
-
-//				System.out.println("Az állatkertnek szüksége van " + missingAnimalTypeSet + " gondozóra!");
+					throw new ZooEmployeeException(ZooEmployeeException.ZooEmployeeExType.NoGondozoo);
 			}
 		}
 	}

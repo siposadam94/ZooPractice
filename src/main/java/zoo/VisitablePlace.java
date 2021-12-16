@@ -4,21 +4,24 @@ import zoo.animal.Animal;
 import zoo.animal.AnimalType;
 import zoo.detail.Coordinate;
 import zoo.detail.Detail;
-import zoo.detail.DetailBox;
 import zoo.employee.Employee;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class VisitablePlace implements Serializable {
+public class VisitablePlace<T extends Detail> implements Serializable {
 
    private List<Animal> animals;
    private AnimalType animalType;
    private Employee employee;
    private Coordinate coordinate;
-   private DetailBox<? extends Detail> detail;
+   private T detail;
 
-    public VisitablePlace() {
+    public VisitablePlace(AnimalType animalType, Employee employee, Coordinate coordinate, T detail) {
+        this.animalType = animalType;
+        this.employee = employee;
+        this.coordinate = coordinate;
+        this.detail = detail;
     }
 
     public List<Animal> getAnimals() {
@@ -53,11 +56,11 @@ public class VisitablePlace implements Serializable {
         this.coordinate = coordinate;
     }
 
-    public DetailBox<? extends Detail> getDetail() {
+    public T getDetail() {
         return detail;
     }
 
-    public void setDetail(DetailBox<? extends Detail> detail) {
+    public void setDetail(T detail) {
         this.detail = detail;
     }
 }
