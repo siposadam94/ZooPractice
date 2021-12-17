@@ -1,7 +1,5 @@
 package zoo.detail;
 
-import java.time.LocalDate;
-
 public class DetailPlant extends Detail {
 
     public enum Season {

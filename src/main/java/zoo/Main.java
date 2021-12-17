@@ -2,20 +2,18 @@ package zoo;
 
 import zoo.animal.Animal;
 import zoo.animal.AnimalType;
-import zoo.detail.*;
+import zoo.detail.Coordinate;
+import zoo.detail.DetailAnimal;
 import zoo.employee.Cleaner;
 import zoo.employee.Director;
 import zoo.employee.Employee;
 import zoo.employee.GondoZoo;
 import zoo.task.CleanerTask;
 import zoo.task.GondoZooTask;
-import zoo.ticket.Booking;
 import zoo.ticket.BookingThread;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Main {
 

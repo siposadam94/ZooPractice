@@ -1,7 +1,6 @@
 package zoo.employee;
 
 import zoo.animal.AnimalType;
-import zoo.exception.GondozooNotAvailable;
 import zoo.exception.ZooEmployeeException;
 
 import java.io.FileInputStream;
@@ -14,6 +13,15 @@ public class EmployeeManager implements Serializable {
 	
 	private Director director;
 	private List<NonDirector> workers;
+
+	//A
+//	{
+//		workers = new ArrayList<>();
+//	}
+	//B
+	public EmployeeManager() {
+		workers = new ArrayList<>();
+	}
 
 	public void showEmployees() {
 		if (director != null) {
@@ -120,12 +128,4 @@ public class EmployeeManager implements Serializable {
 		this.workers = workers;
 	}
 
-	public EmployeeManager() {
-		workers = new ArrayList<>();
-	}
-
-	public EmployeeManager(Director director, List<NonDirector> workers) {
-		this.director = director;
-		this.workers = workers;
-	}
 }

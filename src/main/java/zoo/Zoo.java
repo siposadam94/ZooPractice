@@ -5,13 +5,15 @@ import zoo.animal.AnimalType;
 import zoo.employee.*;
 import zoo.exception.GondozooNotAvailable;
 import zoo.exception.ZooEmployeeException;
-import zoo.exception.ZooException;
 import zoo.task.CleanerTask;
 import zoo.task.GondoZooTask;
 import zoo.task.Task;
 import zoo.ticket.Booking;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -21,7 +23,6 @@ public class Zoo implements Serializable {
 		public void moveZoo(Zoo zoo) {
 			zoo.animals = new ArrayList<>(animals);
 
-			zoo.employeeManager = new EmployeeManager();
 			zoo.employeeManager.setDirector(employeeManager.getDirector());
 			zoo.employeeManager.setWorkers(new ArrayList<>(employeeManager.getWorkers()));
 

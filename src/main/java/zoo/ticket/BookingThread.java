@@ -13,7 +13,6 @@ public class BookingThread {
                 LocalDate.of(2019,07, 31),
                 LocalDate.of(2019, 11, 11)
                         );
-
     static {
 
         b1.addTicket(
@@ -23,18 +22,19 @@ public class BookingThread {
                 new Ticket(Ticket.TicketPriceType.KID, new TicketTypeFullDay(), 1.69)
         );
     }
+    static Thread task1, task2, task3, task4;
 
     public static void runOneThread(Zoo zoo) throws InterruptedException {
 
-        Thread task = new Thread( () -> {
+        task1 = new Thread( () -> {
             for(int i = 0; i < 100000; i++) {
                 zoo.addBooking(b1);
             }
         });
 
         long start1 = System.currentTimeMillis();
-        task.start();
-        task.join();
+        task1.start();
+        task1.join();
         System.out.println(zoo.getBookings().size());
         long finish1 = System.currentTimeMillis();
         long timeElapsed1 = finish1 - start1;
@@ -44,7 +44,7 @@ public class BookingThread {
 
     public static void runTwoThread(Zoo zoo) throws InterruptedException {
 
-        Thread task1 = new Thread(new Runnable() {
+        task1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 for(int i = 0; i < 50000; i++) {
@@ -53,7 +53,7 @@ public class BookingThread {
             }
         });
 
-        Thread task2 = new Thread(new Runnable() {
+        task2 = new Thread(new Runnable() {
             @Override
             public void run() {
                 for(int i = 0; i < 50000; i++) {
@@ -77,7 +77,7 @@ public class BookingThread {
 
     public static void runFourThread(Zoo zoo) throws InterruptedException {
 
-        Thread task1 = new Thread(new Runnable() {
+        task1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 for(int i = 0; i < 25000; i++) {
@@ -86,7 +86,7 @@ public class BookingThread {
             }
         });
 
-        Thread task2 = new Thread(new Runnable() {
+        task2 = new Thread(new Runnable() {
             @Override
             public void run() {
                 for(int i = 0; i < 25000; i++) {
@@ -94,7 +94,7 @@ public class BookingThread {
                 }
             }
         });
-        Thread task3 = new Thread(new Runnable() {
+        task3 = new Thread(new Runnable() {
             @Override
             public void run() {
                 for(int i = 0; i < 25000; i++) {
@@ -103,7 +103,7 @@ public class BookingThread {
             }
         });
 
-        Thread task4 = new Thread(new Runnable() {
+        task4 = new Thread(new Runnable() {
             @Override
             public void run() {
                 for(int i = 0; i < 25000; i++) {
