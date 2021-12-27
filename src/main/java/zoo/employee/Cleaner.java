@@ -16,6 +16,15 @@ public class Cleaner extends NonDirector {
 		this.cleaningArea = cleaningArea;
 	}
 
+	@Override
+	public void reward() {
+		long daysBetween = ChronoUnit.DAYS.between(getHireDate(), LocalDate.now());
+		
+		if (daysBetween >= 5 * 365) {
+			System.out.println(getName() + " nevű takarító jutalmat kap!");
+		}
+	}
+
 	public List<CleaningArea> getCleaningArea() {
 		return cleaningArea;
 	}
@@ -23,14 +32,4 @@ public class Cleaner extends NonDirector {
 	public void setCleaningArea(List<CleaningArea> cleaningArea) {
 		this.cleaningArea = cleaningArea;
 	}
-
-	@Override
-	public void reward() {
-		long daysBetween = ChronoUnit.DAYS.between(getHireDate(), LocalDate.now());
-		
-		if (daysBetween >= 5 * 365) {
-			System.out.println(getName() + " jutalmat kap!");
-		}
-	}
-	
 }

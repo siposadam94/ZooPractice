@@ -6,28 +6,17 @@ public class DetailPlant extends Detail {
         SPRING, SUMMER, FALL, WINTER
     }
 
-    private String origin;
     private String soilType;
     private boolean isBlooming;
     private Season bloomingSeason;
     private int wateringFrequencyDays;
-    private boolean isCarnivorous;
 
     public DetailPlant(String origin, String soilType, boolean isBlooming, Season bloomingSeason, int wateringFrequencyDays, boolean isCarnivorous) {
-        this.origin = origin;
+        super(origin, isCarnivorous);
         this.soilType = soilType;
         this.isBlooming = isBlooming;
         this.bloomingSeason = bloomingSeason;
         this.wateringFrequencyDays = wateringFrequencyDays;
-        this.isCarnivorous = isCarnivorous;
-    }
-
-    public String getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(String origin) {
-        this.origin = origin;
     }
 
     public String getSoilType() {
@@ -60,13 +49,5 @@ public class DetailPlant extends Detail {
 
     public void setWateringFrequencyDays(int wateringFrequencyDays) {
         this.wateringFrequencyDays = wateringFrequencyDays;
-    }
-
-    public boolean isCarnivorous() {
-        return isCarnivorous;
-    }
-
-    public void setCarnivorous(boolean carnivorous) {
-        isCarnivorous = carnivorous;
     }
 }

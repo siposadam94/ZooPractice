@@ -1,6 +1,7 @@
 package zoo.task;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import zoo.CleaningArea;
 import zoo.employee.Cleaner;
@@ -14,6 +15,11 @@ public class CleanerTask implements Task {
 	public CleanerTask(CleaningArea tasks) {
 		this.task = tasks;
 		this.jobTime = LocalDateTime.now();
+	}
+
+	@Override
+	public String showTaskDetail() {
+		return cleaner.getName() + " elvégezte a " + task + " takaritását " + jobTime.format(DateTimeFormatter.ISO_DATE) + " kor";
 	}
 
 	public Cleaner getCleaner() {
@@ -38,11 +44,6 @@ public class CleanerTask implements Task {
 
 	public void setJobTime(LocalDateTime jobTime) {
 		this.jobTime = jobTime;
-	}
-
-	@Override
-	public String toString() {
-		return cleaner.getName() + " elvégezte a " + task + " takaritását " + jobTime + " kor";
 	}
 
 }

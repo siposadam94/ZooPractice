@@ -1,6 +1,7 @@
 package zoo.task;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import zoo.animal.AnimalType;
 import zoo.employee.GondoZoo;
@@ -14,6 +15,10 @@ public class GondoZooTask implements Task {
 	public GondoZooTask(AnimalType tasks) {
 		this.task = tasks;
 		this.jobTime = LocalDateTime.now();
+	}
+	@Override
+	public String showTaskDetail() {
+		return gondoZoo.getName() + " elvégezte a " + task + " gondozását " + jobTime.format(DateTimeFormatter.ISO_DATE) + " kor";
 	}
 
 	public GondoZoo getGondoZoo() {
@@ -40,9 +45,4 @@ public class GondoZooTask implements Task {
 		this.jobTime = jobTime;
 	}
 
-	@Override
-	public String toString() {
-		return gondoZoo.getName() + " elvégezte a " + task + " gondozását " + jobTime + " kor";
-	}
-	
 }

@@ -6,34 +6,15 @@ public class DetailAnimal extends Detail {
         MAMMAL, FISH, BIRD, REPTILE, AMPHIBIAN
     }
 
-    private String origin;
-    private boolean isCarnivorous;
     private int averageAge;
     private int numberOfLegs;
     private BasicAnimalClass basicAnimalClass;
 
     public DetailAnimal(String origin, boolean isCarnivorous, int averageAge, int numberOfLegs, BasicAnimalClass basicAnimalClass) {
-        this.origin = origin;
-        this.isCarnivorous = isCarnivorous;
+        super(origin, isCarnivorous);
         this.averageAge = averageAge;
         this.numberOfLegs = numberOfLegs;
         this.basicAnimalClass = basicAnimalClass;
-    }
-
-    public String getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
-    public boolean isCarnivorous() {
-        return isCarnivorous;
-    }
-
-    public void setCarnivorous(boolean carnivorous) {
-        isCarnivorous = carnivorous;
     }
 
     public int getAverageAge() {

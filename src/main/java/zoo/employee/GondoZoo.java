@@ -16,20 +16,20 @@ public class GondoZoo extends NonDirector {
 		this.caredAnimalTypes = caredAnimalType;
 	}
 
+	@Override
+	public void reward() {
+		long daysBetween = ChronoUnit.DAYS.between(getHireDate(), LocalDate.now());
+		
+		if (daysBetween >= 5 * 365) {
+			System.out.println(getName() + " nevű gondozoo jutalmat kap!");
+		}
+	}
+
 	public List<AnimalType> getCaredAnimalTypes() {
 		return caredAnimalTypes;
 	}
 
 	public void setCaredAnimalTypes(List<AnimalType> caredAnimalTypes) {
 		this.caredAnimalTypes = caredAnimalTypes;
-	}
-
-	@Override
-	public void reward() {
-		long daysBetween = ChronoUnit.DAYS.between(getHireDate(), LocalDate.now());
-		
-		if (daysBetween >= 5 * 365) {
-			System.out.println(getName() + " jutalmat kap!");
-		}
 	}
 }

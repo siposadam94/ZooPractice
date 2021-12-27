@@ -14,11 +14,6 @@ public class EmployeeManager implements Serializable {
 	private Director director;
 	private List<NonDirector> workers;
 
-	//A
-//	{
-//		workers = new ArrayList<>();
-//	}
-	//B
 	public EmployeeManager() {
 		workers = new ArrayList<>();
 	}
@@ -76,7 +71,7 @@ public class EmployeeManager implements Serializable {
 
 		if (employee instanceof Director) {
 			if (this.director == null) {
-				throw new ZooEmployeeException(ZooEmployeeException.ZooEmployeeExType.NoDirector);
+				throw new ZooEmployeeException(prop.getProperty(ZooEmployeeException.ZooEmployeeExType.NoDirector.getErrorCode()));
 			} else {
 				System.out.println("Az állatkert " + director.getName() + " igazgatója eltávozott!");
 				director = null;
@@ -101,12 +96,12 @@ public class EmployeeManager implements Serializable {
 				}
 			}
 			if (!missingAnimalTypeSet.isEmpty()) {
-					throw new ZooEmployeeException(ZooEmployeeException.ZooEmployeeExType.NoGondozoo);
+					throw new ZooEmployeeException(prop.getProperty(ZooEmployeeException.ZooEmployeeExType.NoGondozoo.getErrorCode()));
 			}
 		}
 	}
 
-	public void reward() {
+	public void showRevardableEmployee() {
 		for (NonDirector worker : workers) {
 			worker.reward();
 		}

@@ -29,7 +29,6 @@ public class Zoo implements Serializable {
 			animals.clear();
 			employeeManager.setDirector(null);
 			employeeManager.getWorkers().clear();
-
 		}
 	}
 	
@@ -70,7 +69,7 @@ public class Zoo implements Serializable {
 
 	public void showCompletedTasks() {
 		for (Task task : completedTasks) {
-			System.out.println(task.toString());
+			System.out.println(task.showTaskDetail());
 		}
 	}
 
@@ -96,17 +95,13 @@ public class Zoo implements Serializable {
 
 	public void sortAnimals() {
 		//Collections.sort(animals,Comparator.comparing(Animal::getAnimalType).thenComparing(Animal::getNickname));
-		Collections.sort(animals,new Comparator<Animal>() {
+		Collections.sort(animals, (o1, o2) -> {
 
-			@Override
-			public int compare(Animal o1, Animal o2) {
-				
-				int num = o1.getAnimalType().toString().compareTo(o2.getAnimalType().toString());
-				if (num == 0) {
-					return o1.getNickname().compareTo(o2.getNickname());
-				}
-				return num;
+			int num = o1.getAnimalType().name().compareTo(o2.getAnimalType().name());
+			if (num == 0) {
+				return o1.getNickname().compareTo(o2.getNickname());
 			}
+			return num;
 		});
 	}
 	
@@ -121,31 +116,32 @@ public class Zoo implements Serializable {
 	public void addEmployee(Employee employee) {
 		employeeManager.addEmployee(employee);
 	}
-	
-	public void releseEmployee(Employee employee) {
-		try {
+
+	public void releaseEmployee(Employee employee) throws ZooEmployeeException {
 			employeeManager.releaseEmployee(employee);
-		} catch (ZooEmployeeException e) {
-			System.out.println(e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
-	public void reward() {
-		employeeManager.reward();
+	public void rewardCheck() {
+		employeeManager.showRevardableEmployee();
 	}
 
+	/**
+	 * Show animals sorted by their type.
+	 */
 	public void showAnimals() {
 		if (animals.isEmpty()) {
 			System.out.println("Az állatkert jelenleg üres!");
 		} else {
+			System.out.println("Az állatkert állatai:");
 			animals.stream()
 					.sorted(Comparator.comparing(Animal::getAnimalTypeString))
 					.forEach(a -> System.out.println(a.getNickname()));
 		}
 	}
 
+	/**
+	 * Show specific tpye of animals, sorted by their nickname.
+	 */
 	public void showSpecificAnimalsByType(AnimalType animalType) {
 		if (animals.isEmpty()) {
 			System.out.println("Az állatkert jelenleg üres!");
@@ -156,7 +152,7 @@ public class Zoo implements Serializable {
 		}
 	}
 
-	public void addAnimal(Animal animal) {
+	public void addAnimal(Animal animal) throws GondozooNotAvailable {
 		boolean ableAdopt = false;
 		
 		for (NonDirector employee : employeeManager.getWorkers()) {
@@ -170,11 +166,10 @@ public class Zoo implements Serializable {
 		
 		if (ableAdopt == true) {
 			animals.add(animal);
+			System.out.println(animal.getNickname() + " hozzáadva az állatkerthez");
 		} else {
-			try {
 				try (InputStream input = new FileInputStream("src/main/resources/config.properties")) {
 					Properties prop = new Properties();
-
 					prop.load(input);
 
 					throw new GondozooNotAvailable( prop.getProperty("error.gondozooNotAvailable") );
@@ -182,11 +177,6 @@ public class Zoo implements Serializable {
 					ex.printStackTrace();
 				}
 
-			} catch (GondozooNotAvailable e) {
-				System.out.println(e.getMessage());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 //			System.out.println("A(z) " + animal.getAnimalType() + " állatot az állatkert jelenleg nem tudja fogadni");
 		}
 		
@@ -200,21 +190,20 @@ public class Zoo implements Serializable {
 		System.out.println("Az állatkertnek " + animals.size() + " lakója van jelenleg!");
 	}
 
-	//Milyen hibát dobjanak? 3/2 feladat és hol kezeljem
-	public void addVisitablePlace(VisitablePlace place) throws Exception {
+	public void addVisitablePlace(VisitablePlace place) {
 
 		if (place.getEmployee() != null) {
 			if (!(place.getEmployee() instanceof GondoZoo)) {
-				throw new Exception("A megadott dolgozó nem GondoZoo!");
+				throw new RuntimeException("A megadott dolgozó nem GondoZoo!");
 			}
 
 			if (!employeeManager.getWorkers().contains( place.getEmployee() )) {
-				throw new Exception("A megadott gondoZoo nem dolgozik az állatkertben!");
+				throw new RuntimeException("A megadott gondoZoo nem dolgozik az állatkertben!");
 			}
 
 			if(place.getAnimalType() != null) {
 				if (!((GondoZoo)place.getEmployee()).getCaredAnimalTypes().contains(place.getAnimalType())) {
-					throw new Exception("A megadott gondoZoo nem foglalkozik ezzel az állattal!");
+					throw new RuntimeException("A megadott gondoZoo nem foglalkozik ezzel az állattal!");
 				}
 			}
 		}

@@ -6,5 +6,9 @@ public enum AnimalType {
 	TIGER,
 	GORILLA,
 	CAMEL,
-	ELEPHANT
+	ELEPHANT,
+	PIRANHA,
+	CROCODILE,
+	EAGLE,
+	HAWK,
 }

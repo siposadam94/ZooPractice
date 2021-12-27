@@ -44,9 +44,7 @@ public class VisitablePlace<T extends Detail> implements Serializable {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
+    public void setEmployee(Employee employee) { this.employee = employee; }
 
     public Coordinate getCoordinate() {
         return coordinate;
