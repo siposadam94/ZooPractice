@@ -12,6 +12,7 @@ import zoo.exception.GondozooNotAvailable;
 import zoo.exception.ZooEmployeeException;
 import zoo.task.CleanerTask;
 import zoo.task.GondoZooTask;
+import zoo.ticket.Booking;
 import zoo.ticket.BookingThread;
 
 import java.lang.reflect.InvocationTargetException;
@@ -223,16 +224,18 @@ public class Main {
 
 		zoo3.showAnimals();
 		zoo3.getEmployeeManager().showCleaners();
-//
-//		try {
-//			BookingThread.runOneThread(zoo3);
-//			BookingThread.runTwoThread(zoo3);
-//			BookingThread.runFourThread(zoo3);
-//			BookingThread.runExecutor(zoo3);
-//
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+
+		try {
+
+			BookingThread.runOneThread(zoo3);
+			BookingThread.runTwoThread(zoo3);
+
+			BookingThread.runExecutor(zoo3, 1);
+			//BookingThread.runExecutor(zoo3, 2);
+			//BookingThread.runExecutor(zoo3, 4);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 //
 ////		Class<?> animalClass = Class.forName("zoo.animal.Animal");
 ////		Animal animal = (Animal) animalClass.getDeclaredConstructor().newInstance();

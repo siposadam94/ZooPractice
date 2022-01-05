@@ -4,40 +4,50 @@ import zoo.Zoo;
 import java.time.LocalDate;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class BookingThread {
-
-    private static final Booking b1 = new Booking(
-                "name name",
-                LocalDate.of(2019,07, 31),
-                LocalDate.of(2019, 11, 11)
-                        );
-    static {
-
-        b1.addTicket(
-                new Ticket(Ticket.TicketPriceType.RETIRED, new TicketTypeFullDay(), 2.99)
-        );
-        b1.addTicket(
-                new Ticket(Ticket.TicketPriceType.KID, new TicketTypeFullDay(), 1.69)
-        );
-    }
+ 
     static Thread task1, task2, task3, task4;
+
+    public static Booking randomGenerateBooking() {
+
+        long minDay = LocalDate.of(2019, 5, 1).toEpochDay();
+        long maxDay = LocalDate.of(2020, 1, 1).toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
+
+        Booking generatedBooking = new Booking("test name", randomDate, randomDate );
+
+        generatedBooking.addTicket(
+                new Ticket(Ticket.TicketPriceType.ADULT, new TicketTypeFullDay(), 10.99));
+        generatedBooking.addTicket(
+                new Ticket(Ticket.TicketPriceType.ADULT, new TicketTypeFullDay(), 10.99));
+        generatedBooking.addTicket(
+                new Ticket(Ticket.TicketPriceType.RETIRED, new TicketTypeFullDay(), 5.99));
+        generatedBooking.addTicket(
+                new Ticket(Ticket.TicketPriceType.KID, new TicketTypeFullDay(), 5.99));
+        
+        return generatedBooking;
+    }
 
     public static void runOneThread(Zoo zoo) throws InterruptedException {
 
-        task1 = new Thread( () -> {
-            for(int i = 0; i < 100000; i++) {
-                zoo.addBooking(b1);
+        task1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 100000; i++) {
+                    zoo.addBooking(randomGenerateBooking());
+                }
             }
         });
-
         long start1 = System.currentTimeMillis();
         task1.start();
         task1.join();
+        long timeElapsed1 = System.currentTimeMillis() - start1;
+
         System.out.println(zoo.getBookings().size());
-        long finish1 = System.currentTimeMillis();
-        long timeElapsed1 = finish1 - start1;
         System.out.println("1 thread " + timeElapsed1);
         zoo.getBookings().clear();
     }
@@ -47,8 +57,8 @@ public class BookingThread {
         task1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                for(int i = 0; i < 50000; i++) {
-                    zoo.addBooking(b1);
+                for (int i = 0; i < 50000; i++) {
+                    zoo.addBooking(randomGenerateBooking());
                 }
             }
         });
@@ -56,8 +66,8 @@ public class BookingThread {
         task2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                for(int i = 0; i < 50000; i++) {
-                    zoo.addBooking(b1);
+                for (int i = 0; i < 50000; i++) {
+                    zoo.addBooking(randomGenerateBooking());
                 }
             }
         });
@@ -66,87 +76,31 @@ public class BookingThread {
         task1.start();
         task2.start();
         task1.join();
-        task2.join();;
+        task2.join();
+        long timeElapsed1 = System.currentTimeMillis() - start1;
+
         System.out.println(zoo.getBookings().size());
-        long finish1 = System.currentTimeMillis();
-        long timeElapsed1 = finish1 - start1;
         System.out.println("2 thread " + timeElapsed1);
         zoo.getBookings().clear();
     }
 
+    public static void runExecutor(Zoo zoo, int threadNum) throws InterruptedException {
 
-    public static void runFourThread(Zoo zoo) throws InterruptedException {
-
-        task1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(int i = 0; i < 25000; i++) {
-                    zoo.addBooking(b1);
-                }
-            }
-        });
-
-        task2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(int i = 0; i < 25000; i++) {
-                    zoo.addBooking(b1);
-                }
-            }
-        });
-        task3 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(int i = 0; i < 25000; i++) {
-                    zoo.addBooking(b1);
-                }
-            }
-        });
-
-        task4 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(int i = 0; i < 25000; i++) {
-                    zoo.addBooking(b1);
-                }
-            }
-        });
-
-        long start1 = System.currentTimeMillis();
-        task1.start();
-        task2.start();
-        task3.start();
-        task4.start();
-        task1.join();
-        task2.join();
-        task3.join();
-        task4.join();
-        System.out.println(zoo.getBookings().size());
-        long finish1 = System.currentTimeMillis();
-        long timeElapsed1 = finish1 - start1;
-        System.out.println("4 thread " + timeElapsed1);
-        zoo.getBookings().clear();
-    }
-
-    public static void runExecutor(Zoo zoo) throws InterruptedException {
-
-        Thread task = new Thread(() -> {
-            for(int i = 0; i < 100000; i++) {
-                zoo.addBooking(b1);
-            }
-        });
-
-        ExecutorService ex = Executors.newFixedThreadPool(4);
+        ExecutorService ex = Executors.newFixedThreadPool(threadNum);
 
 		long start2 = System.currentTimeMillis();
-			ex.submit(task);
 
-			ex.shutdown();
-			ex.awaitTermination(10, TimeUnit.SECONDS);
-		long finish2 = System.currentTimeMillis();
-		long timeElapsed2 = finish2 - start2;
+		for (int i = 0; i < 100000; i++) {
+            ex.submit(() -> zoo.addBooking( randomGenerateBooking()));
+        }
+
+        long timeElapsed2 = System.currentTimeMillis() - start2;
+
+		ex.shutdown();
+        ex.awaitTermination(1, TimeUnit.SECONDS);
+
         System.out.println(zoo.getBookings().size());
-		System.out.println("Executor thread " + timeElapsed2);
+		System.out.println(threadNum + " thread: " + timeElapsed2 + " ms");
 			zoo.getBookings().clear();
 
     }

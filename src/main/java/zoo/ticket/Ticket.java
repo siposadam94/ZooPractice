@@ -3,6 +3,7 @@ package zoo.ticket;
 import java.io.Serializable;
 
 public class Ticket implements Serializable {
+
     public enum TicketPriceType {
         ADULT, KID, RETIRED, GROUP
     }

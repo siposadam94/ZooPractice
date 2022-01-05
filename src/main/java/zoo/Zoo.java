@@ -2,6 +2,7 @@ package zoo;
 
 import zoo.animal.Animal;
 import zoo.animal.AnimalType;
+import zoo.detail.Detail;
 import zoo.employee.*;
 import zoo.exception.GondozooNotAvailable;
 import zoo.exception.ZooEmployeeException;
@@ -20,9 +21,10 @@ import java.util.*;
 public class Zoo implements Serializable {
 
 	class Mover {
-		public void moveZoo(Zoo zoo) {
-			zoo.animals = new ArrayList<>(animals);
 
+		public void moveZoo(Zoo zoo) {
+
+			zoo.animals = new ArrayList<>(animals);
 			zoo.employeeManager.setDirector(employeeManager.getDirector());
 			zoo.employeeManager.setWorkers(new ArrayList<>(employeeManager.getWorkers()));
 
@@ -53,18 +55,15 @@ public class Zoo implements Serializable {
 		visitablePlaces = new ArrayList<>();
 		System.out.println("Az állatkert sajnos még üres!");
 
-		//thread booking
 		bookings = Collections.synchronizedList(new ArrayList<>());
-	}
-
-	//Place for constructors
-
-	public synchronized void addBooking(Booking booking) {
-		bookings.add(booking);
 	}
 
 	public static void showZooCount() {
 		System.out.println("Az országnak " + zooCounter + " állatkertje van jelenleg!");
+	}
+
+	public synchronized void addBooking(Booking booking) {
+		bookings.add(booking);
 	}
 
 	public void showCompletedTasks() {
@@ -94,9 +93,7 @@ public class Zoo implements Serializable {
 	}
 
 	public void sortAnimals() {
-		//Collections.sort(animals,Comparator.comparing(Animal::getAnimalType).thenComparing(Animal::getNickname));
-		Collections.sort(animals, (o1, o2) -> {
-
+		animals.sort((o1, o2) -> {
 			int num = o1.getAnimalType().name().compareTo(o2.getAnimalType().name());
 			if (num == 0) {
 				return o1.getNickname().compareTo(o2.getNickname());
@@ -140,7 +137,7 @@ public class Zoo implements Serializable {
 	}
 
 	/**
-	 * Show specific tpye of animals, sorted by their nickname.
+	 * Show specific tpye of animals.
 	 */
 	public void showSpecificAnimalsByType(AnimalType animalType) {
 		if (animals.isEmpty()) {
@@ -164,7 +161,7 @@ public class Zoo implements Serializable {
 			}
 		}
 		
-		if (ableAdopt == true) {
+		if (ableAdopt) {
 			animals.add(animal);
 			System.out.println(animal.getNickname() + " hozzáadva az állatkerthez");
 		} else {
@@ -190,8 +187,7 @@ public class Zoo implements Serializable {
 		System.out.println("Az állatkertnek " + animals.size() + " lakója van jelenleg!");
 	}
 
-	public void addVisitablePlace(VisitablePlace place) {
-
+	public void addVisitablePlace(VisitablePlace<? extends Detail> place) {
 		if (place.getEmployee() != null) {
 			if (!(place.getEmployee() instanceof GondoZoo)) {
 				throw new RuntimeException("A megadott dolgozó nem GondoZoo!");
