@@ -3,16 +3,15 @@ package zoo.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import zoo.CleaningArea;
 import zoo.employee.Cleaner;
 
 public class CleanerTask implements Task {
 
 	private Cleaner cleaner;
-	private CleaningArea task;
+	private Cleaner.CleaningArea task;
 	private LocalDateTime jobTime;
 	
-	public CleanerTask(CleaningArea tasks) {
+	public CleanerTask(Cleaner.CleaningArea tasks) {
 		this.task = tasks;
 		this.jobTime = LocalDateTime.now();
 	}
@@ -30,12 +29,12 @@ public class CleanerTask implements Task {
 		this.cleaner = cleaner;
 	}
 
-	public CleaningArea getTasks() {
+	public Cleaner.CleaningArea getTask() {
 		return task;
 	}
 
-	public void setTasks(CleaningArea tasks) {
-		this.task = tasks;
+	public void setTask(Cleaner.CleaningArea task) {
+		this.task = task;
 	}
 
 	public LocalDateTime getJobTime() {
@@ -45,5 +44,4 @@ public class CleanerTask implements Task {
 	public void setJobTime(LocalDateTime jobTime) {
 		this.jobTime = jobTime;
 	}
-
 }

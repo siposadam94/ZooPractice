@@ -8,6 +8,23 @@ public class Ticket implements Serializable {
         ADULT, KID, RETIRED, GROUP
     }
 
+    public enum TicketType {
+        FULLDAY("kifutók", "fóka show", "terrárium"),
+        MORNING("kifutók"),
+        AFTERNOON("kifutók", "fóka show");
+
+        private final String[] visitableSites;
+
+        TicketType(String... visitableSites)
+        {
+            this.visitableSites = visitableSites;
+        }
+
+        public String[] getVisitableSites() {
+            return visitableSites;
+        }
+    }
+
     private TicketPriceType ticketPriceType;
     private TicketType ticketType;
     private double ticketPrice;

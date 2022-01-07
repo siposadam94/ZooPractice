@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Save and load Zoo class, uses a .tmp file
+ * Save and load Zoo class
  */
 public class ZooSaver implements Serializable {
 
@@ -25,8 +25,8 @@ public class ZooSaver implements Serializable {
      * file will be called "zoo.txt" in our root folder
      */
     public static void saveZooPrettier(Zoo zoo) {
+        StringBuilder stringBuilder = new StringBuilder();
 
-    StringBuilder stringBuilder = new StringBuilder("Director" + " \n");
         if (zoo.getEmployeeManager().getDirector() != null) {
             stringBuilder.append(employeeStringBuilder(zoo.getEmployeeManager().getDirector()));
         } else {
@@ -34,20 +34,18 @@ public class ZooSaver implements Serializable {
         }
 
         stringBuilder.append("Employee" + "\n");
-        zoo.getEmployeeManager().getWorkers().forEach(employee -> {
-            stringBuilder.append(employeeStringBuilder(employee)).append("\n");
-        });
-
+        zoo.getEmployeeManager().getWorkers().forEach(employee ->
+                stringBuilder.append(employeeStringBuilder(employee)).append("\n")
+        );
 
         stringBuilder.append("Animals" + "\n");
         zoo.getAnimals().forEach(
-                animal -> {
-                    stringBuilder.append(animalStringBuilder(animal));
-                });
+                animal ->
+                        stringBuilder.append(animalStringBuilder(animal))
+        );
 
         try (BufferedWriter bufferedReader = new BufferedWriter(new FileWriter("zoo.txt"))) {
-
-           bufferedReader.write(stringBuilder.toString());
+            bufferedReader.write(stringBuilder.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,55 +56,50 @@ public class ZooSaver implements Serializable {
      * the "zoo.txt" file is in our root folder
      */
     public static Zoo loadZooPrettier() {
-
         Zoo tempZoo = new Zoo();
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader("zoo.txt"))) {
-
-            String line = bufferedReader.readLine();
+            String line;
             Employee employee;
-
             String[] directorAttributes = bufferedReader.readLine().split(";");
-                employee = new Director(
-                        directorAttributes[0].trim(),
-                        LocalDate.parse(directorAttributes[1]),
-                        Enum.valueOf(Sex.class, directorAttributes[2]),
-                        LocalDate.parse(directorAttributes[3]));
-                tempZoo.addEmployee(employee);
-            while (!(line = bufferedReader.readLine()).equals("Animals")) {
+            employee = new Director(
+                    directorAttributes[0].trim(),
+                    LocalDate.parse(directorAttributes[1]),
+                    Enum.valueOf(Sex.class, directorAttributes[2]),
+                    LocalDate.parse(directorAttributes[3]));
+            tempZoo.addEmployee(employee);
 
+            while (!"Animals".equals(line = bufferedReader.readLine())) {
                 String[] employeeAttributes = line.split(";");
 
+                if ("G".equals(employeeAttributes[0].trim())) {
 
-                if (employeeAttributes[0].trim().equals("G")) {
-
-                    List<AnimalType> animalTypes = Arrays.stream(employeeAttributes[4].split(",")).map(
-                            animalTypeString -> Enum.valueOf(AnimalType.class,animalTypeString)
-                    ).collect(Collectors.toList());
+                    List<AnimalType> animalTypes = Arrays.stream(employeeAttributes[4].split(","))
+                            .map(animalTypeString -> Enum.valueOf(AnimalType.class, animalTypeString))
+                            .collect(Collectors.toList());
 
                     employee = new GondoZoo(
                             employeeAttributes[1],
                             LocalDate.parse(employeeAttributes[2]),
-                            Enum.valueOf(Sex.class,employeeAttributes[3]),
+                            Enum.valueOf(Sex.class, employeeAttributes[3]),
                             animalTypes,
                             LocalDate.parse(employeeAttributes[5])
                     );
-                } else if (employeeAttributes[0].trim().equals("C")) {
-
+                } else if ("C".equals(employeeAttributes[0].trim())) {
                     employee = new Cleaner(
                             employeeAttributes[1],
                             LocalDate.parse(employeeAttributes[2]),
-                            Enum.valueOf(Sex.class,employeeAttributes[3]),
-                            Arrays.stream(employeeAttributes[4].split(",")).map(
-                                    cleaningAreaString -> Enum.valueOf(CleaningArea.class,cleaningAreaString)
-                            ).collect(Collectors.toList()),
+                            Enum.valueOf(Sex.class, employeeAttributes[3]),
+                            Arrays.stream(employeeAttributes[4].split(","))
+                                    .map(cleaningAreaString -> Enum.valueOf(Cleaner.CleaningArea.class, cleaningAreaString))
+                                    .collect(Collectors.toList()),
                             LocalDate.parse(employeeAttributes[5])
                     );
                 }
 
                 tempZoo.addEmployee(employee);
-
             }
+
             while ((line = bufferedReader.readLine()) != null) {
                 String[] animalAttributes = line.split(";");
                 Animal animal = new Animal(
@@ -125,22 +118,17 @@ public class ZooSaver implements Serializable {
         return tempZoo;
     }
 
-    /**
-     * Build a readable string format for a given animal. Fields are separated by ";".
-     */
-    public static String animalStringBuilder(Animal animal) {
-        StringBuilder stringBuilder = new StringBuilder("\t");
-
-            stringBuilder
-                    .append(animal.getAnimalTypeString() + ";")
-                    .append(animal.getNickname() + ";")
-                    .append(animal.getBirthday() + ";")
-                    .append(animal.getSex() + ";")
-                    .append("\n");
-            return stringBuilder.toString();
+    private static String animalStringBuilder(Animal animal) {
+        return "\t" +
+                animal.getAnimalTypeString() + ";" +
+                animal.getNickname() + ";" +
+                animal.getBirthday() + ";" +
+                animal.getSex() + ";" +
+                "\n";
     }
 
-    public static String employeeStringBuilder(Employee employee) {
+
+    private static String employeeStringBuilder(Employee employee) {
         StringBuilder stringBuilder = new StringBuilder("\t");
 
         if (employee instanceof GondoZoo) {
@@ -150,23 +138,25 @@ public class ZooSaver implements Serializable {
         }
 
         stringBuilder
-                .append(employee.getName() + ";")
-                .append(employee.getBirthDate() + ";")
-                .append(employee.getSex() + ";");
+                .append(employee.getName())
+                .append(";")
+                .append(employee.getBirthDate())
+                .append(";")
+                .append(employee.getSex())
+                .append(";");
 
         if (employee instanceof Cleaner) {
             stringBuilder
                     .append(
-                            StringUtils.join(((Cleaner) employee).getCleaningArea(), ",") + ";"
-                    );
+                            StringUtils.join(((Cleaner) employee).getCleaningArea(), ",")
+                    ).append(";");
         } else if (employee instanceof GondoZoo) {
             stringBuilder
                     .append(
-                            StringUtils.join(((GondoZoo) employee).getCaredAnimalTypes(), ",") + ";"
-                    );
+                            StringUtils.join(((GondoZoo) employee).getCaredAnimalTypes(), ",")
+                    ).append(";");
         }
-
-        stringBuilder.append(employee.getHireDate() + ";");
+        stringBuilder.append(employee.getHireDate()).append(";");
 
         return stringBuilder.toString();
     }
@@ -175,47 +165,27 @@ public class ZooSaver implements Serializable {
      * Old version for saving zoo to a .tmp file
      */
     public static void saveZoo(Zoo zoo) {
-        ObjectOutputStream oos = null;
-        try {
-            oos = new ObjectOutputStream(new FileOutputStream("zoo.tmp", false));
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("zoo.tmp", false))) {
             oos.writeObject(zoo);
             System.out.println("Az állatkert kimentve a zoo.tmp fileba");
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (oos != null) {
-                    oos.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     /**
-     *
      * Old version for loading zoo from a .tmp file
      */
     public static Zoo loadZoo() {
 
         Zoo loadedZoo = new Zoo();
-        ObjectInputStream ois = null;
-        try {
-            ois = new ObjectInputStream(new FileInputStream("zoo.tmp"));
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("zoo.tmp"))) {
             loadedZoo = (Zoo) ois.readObject();
-
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (ois != null) {
-                    ois.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
+
         return loadedZoo;
     }
 }

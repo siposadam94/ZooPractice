@@ -1,6 +1,5 @@
 package zoo.employee;
 
-import zoo.CleaningArea;
 import zoo.Sex;
 
 import java.time.LocalDate;
@@ -8,6 +7,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class Cleaner extends NonDirector {
+
+	public enum CleaningArea {
+		TERRARIUM, MEDENCE, KETREC, KIFUTO
+	}
 
 	private List<CleaningArea> cleaningArea;
 

@@ -14,7 +14,8 @@ public class Booking implements Serializable {
     private int discountPercentage;
     private double price;
 
-    public Booking() {};
+    public Booking() {
+    }
 
     public Booking(String bookingName, LocalDate bookingDate, LocalDate visitingDate) {
         this.bookingName = bookingName;
