@@ -199,7 +199,6 @@ public class Main {
 		//zoo.addVisitablePlace(visitablePlace4);
 
 		zoo.showSpecificAnimalsByType(AnimalType.ELEPHANT);
-
 		ZooSaver.saveZooPrettier(zoo);
 		//k
 		Zoo zoo2 = new Zoo();
@@ -262,7 +261,8 @@ public class Main {
 		zoo2.rewardCheck();
 
 		Zoo zoo3 = ZooSaver.loadZooPrettier();
-
+		System.out.println("Loaded Zoo:");
+		zoo3.getEmployeeManager().showEmployees();
 		zoo3.showAnimals();
 		zoo3.getEmployeeManager().showCleaners();
 
