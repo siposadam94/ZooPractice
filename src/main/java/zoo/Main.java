@@ -212,9 +212,10 @@ public class Main {
 		mover.moveZoo(zoo2);
 
 		//n
+		System.out.println("Zoo1:");
 		zoo.showAnimals();
 		zoo.showEmployees();
-
+		System.out.println("Zoo2");
 		//o
 		zoo2.showAnimals();
 		zoo2.showEmployees();

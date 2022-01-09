@@ -24,7 +24,7 @@ public class Zoo implements Serializable {
 
         public void moveZoo(Zoo zoo) {
 
-            zoo.animals = new ArrayList<>(animals);
+            zoo.setAnimals(new ArrayList<>(animals));
             zoo.employeeManager.setDirector(employeeManager.getDirector());
             zoo.employeeManager.setWorkers(new ArrayList<>(employeeManager.getWorkers()));
 
@@ -207,15 +207,51 @@ public class Zoo implements Serializable {
         }
     }
 
+    public static int getZooCounter() {
+        return zooCounter;
+    }
+
+    public static void setZooCounter(int zooCounter) {
+        Zoo.zooCounter = zooCounter;
+    }
+
+    public EmployeeManager getEmployeeManager() {
+        return employeeManager;
+    }
+
+    public void setEmployeeManager(EmployeeManager employeeManager) {
+        this.employeeManager = employeeManager;
+    }
+
     public List<Animal> getAnimals() {
         return animals;
+    }
+
+    public void setAnimals(List<Animal> animals) {
+        this.animals = animals;
+    }
+
+    public List<Task> getCompletedTasks() {
+        return completedTasks;
+    }
+
+    public void setCompletedTasks(List<Task> completedTasks) {
+        this.completedTasks = completedTasks;
+    }
+
+    public List<VisitablePlace<? extends Detail>> getVisitablePlaces() {
+        return visitablePlaces;
+    }
+
+    public void setVisitablePlaces(List<VisitablePlace<? extends Detail>> visitablePlaces) {
+        this.visitablePlaces = visitablePlaces;
     }
 
     public List<Booking> getBookings() {
         return bookings;
     }
 
-    public EmployeeManager getEmployeeManager() {
-        return employeeManager;
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }
