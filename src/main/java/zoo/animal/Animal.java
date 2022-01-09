@@ -1,17 +1,19 @@
 package zoo.animal;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import zoo.Sex;
 
-public class Animal {
+public class Animal implements Serializable {
 	private AnimalType animalType;
 	private String nickname;
 	private LocalDate birthday;
 	private Sex sex;
-	
+
+	public Animal() {}
+
 	public Animal(AnimalType animalType, String nickname, LocalDate birthday, Sex sex) {
-		super();
 		this.animalType = animalType;
 		this.nickname = nickname;
 		this.birthday = birthday;
@@ -41,6 +43,9 @@ public class Animal {
 	public void setSex(Sex sex) {
 		this.sex = sex;
 	}
-	
-	
+
+	public String getAnimalTypeString() {
+		return animalType.toString();
+	}
+
 }
