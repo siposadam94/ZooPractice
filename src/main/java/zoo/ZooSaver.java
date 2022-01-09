@@ -1,5 +1,6 @@
 package zoo;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import zoo.animal.Animal;
 import zoo.animal.AnimalType;
@@ -25,15 +26,14 @@ public class ZooSaver implements Serializable {
      * file will be called "zoo.txt" in our root folder
      */
     public static void saveZooPrettier(Zoo zoo) {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder("Employees\n");
 
         if (zoo.getEmployeeManager().getDirector() != null) {
-            stringBuilder.append(employeeStringBuilder(zoo.getEmployeeManager().getDirector()));
+            stringBuilder.append(employeeStringBuilder(zoo.getEmployeeManager().getDirector())).append("\n");
         } else {
-            stringBuilder.append("null");
+            stringBuilder.append("null\n");
         }
 
-        stringBuilder.append("Employee" + "\n");
         zoo.getEmployeeManager().getWorkers().forEach(employee ->
                 stringBuilder.append(employeeStringBuilder(employee)).append("\n")
         );
@@ -61,54 +61,60 @@ public class ZooSaver implements Serializable {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader("zoo.txt"))) {
             String line;
             Employee employee;
-            String[] directorAttributes = bufferedReader.readLine().split(";");
-            employee = new Director(
-                    directorAttributes[0].trim(),
-                    LocalDate.parse(directorAttributes[1]),
-                    Enum.valueOf(Sex.class, directorAttributes[2]),
-                    LocalDate.parse(directorAttributes[3]));
-            tempZoo.addEmployee(employee);
+            if ("Employees".equals(bufferedReader.readLine())) {
+                String[] directorAttributes = bufferedReader.readLine().split(";");
 
-            while (!"Animals".equals(line = bufferedReader.readLine())) {
-                String[] employeeAttributes = line.split(";");
-
-                if ("G".equals(employeeAttributes[0].trim())) {
-
-                    List<AnimalType> animalTypes = Arrays.stream(employeeAttributes[4].split(","))
-                            .map(animalTypeString -> Enum.valueOf(AnimalType.class, animalTypeString))
-                            .collect(Collectors.toList());
-
-                    employee = new GondoZoo(
-                            employeeAttributes[1],
-                            LocalDate.parse(employeeAttributes[2]),
-                            Enum.valueOf(Sex.class, employeeAttributes[3]),
-                            animalTypes,
-                            LocalDate.parse(employeeAttributes[5])
-                    );
-                } else if ("C".equals(employeeAttributes[0].trim())) {
-                    employee = new Cleaner(
-                            employeeAttributes[1],
-                            LocalDate.parse(employeeAttributes[2]),
-                            Enum.valueOf(Sex.class, employeeAttributes[3]),
-                            Arrays.stream(employeeAttributes[4].split(","))
-                                    .map(cleaningAreaString -> Enum.valueOf(Cleaner.CleaningArea.class, cleaningAreaString))
-                                    .collect(Collectors.toList()),
-                            LocalDate.parse(employeeAttributes[5])
-                    );
+                if (directorAttributes.length == 4) {
+                    employee = new Director(
+                            directorAttributes[0].trim(),
+                            LocalDate.parse(directorAttributes[1]),
+                            Enum.valueOf(Sex.class, directorAttributes[2]),
+                            LocalDate.parse(directorAttributes[3]));
+                    tempZoo.addEmployee(employee);
                 }
 
-                tempZoo.addEmployee(employee);
+                while (!"Animals".equals(line = bufferedReader.readLine())) {
+                    String[] employeeAttributes = line.split(";");
+                    if (employeeAttributes.length == 6) {
+                        if ("G".equals(employeeAttributes[0].trim())) {
+                            List<AnimalType> animalTypes = Arrays.stream(employeeAttributes[4].split(","))
+                                    .map(animalTypeString -> Enum.valueOf(AnimalType.class, animalTypeString))
+                                    .collect(Collectors.toList());
+
+                            employee = new GondoZoo(
+                                    employeeAttributes[1],
+                                    LocalDate.parse(employeeAttributes[2]),
+                                    Enum.valueOf(Sex.class, employeeAttributes[3]),
+                                    animalTypes,
+                                    LocalDate.parse(employeeAttributes[5])
+                            );
+                            tempZoo.addEmployee(employee);
+                        } else if ("C".equals(employeeAttributes[0].trim())) {
+                            employee = new Cleaner(
+                                    employeeAttributes[1],
+                                    LocalDate.parse(employeeAttributes[2]),
+                                    Enum.valueOf(Sex.class, employeeAttributes[3]),
+                                    Arrays.stream(employeeAttributes[4].split(","))
+                                            .map(cleaningAreaString -> Enum.valueOf(Cleaner.CleaningArea.class, cleaningAreaString))
+                                            .collect(Collectors.toList()),
+                                    LocalDate.parse(employeeAttributes[5])
+                            );
+                            tempZoo.addEmployee(employee);
+                        }
+                    }
+                }
             }
 
             while ((line = bufferedReader.readLine()) != null) {
                 String[] animalAttributes = line.split(";");
-                Animal animal = new Animal(
-                        Enum.valueOf(AnimalType.class, animalAttributes[0].trim()),
-                        animalAttributes[1],
-                        LocalDate.parse(animalAttributes[2]),
-                        Enum.valueOf(Sex.class, animalAttributes[3]));
-
-                tempZoo.addAnimal(animal);
+                if (animalAttributes.length == 4) {
+                    Animal animal = new Animal(
+                            Enum.valueOf(AnimalType.class, animalAttributes[0].trim()),
+                            animalAttributes[1],
+                            LocalDate.parse(animalAttributes[2]),
+                            Enum.valueOf(Sex.class, animalAttributes[3]));
+                    tempZoo.addAnimal(animal);
+                }
             }
 
 
