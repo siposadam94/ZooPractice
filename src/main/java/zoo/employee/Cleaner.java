@@ -21,9 +21,9 @@ public class Cleaner extends NonDirector {
 
 	@Override
 	public void reward() {
-		long daysBetween = ChronoUnit.DAYS.between(getHireDate(), LocalDate.now());
+		long yearsBetween = ChronoUnit.YEARS.between(getHireDate(), LocalDate.now());
 		
-		if (daysBetween >= 5 * 365) {
+		if (yearsBetween >= 5) {
 			System.out.println(getName() + " nevű takarító jutalmat kap!");
 		}
 	}

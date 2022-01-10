@@ -118,7 +118,7 @@ public class Zoo implements Serializable {
     }
 
     public void rewardCheck() {
-        employeeManager.showRevardableEmployee();
+        employeeManager.showRewardableEmployee();
     }
 
     /**
@@ -152,11 +152,9 @@ public class Zoo implements Serializable {
         boolean ableAdopt = false;
 
         for (NonDirector employee : employeeManager.getWorkers()) {
-            if (employee instanceof GondoZoo) {
-                if (((GondoZoo) employee).getCaredAnimalTypes().contains(animal.getAnimalType())) {
-                    ableAdopt = true;
-                    break;
-                }
+            if (employee instanceof GondoZoo && ((GondoZoo) employee).getCaredAnimalTypes().contains(animal.getAnimalType())) {
+                ableAdopt = true;
+                break;
             }
         }
 
