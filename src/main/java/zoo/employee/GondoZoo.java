@@ -18,9 +18,9 @@ public class GondoZoo extends NonDirector {
 
 	@Override
 	public void reward() {
-		long daysBetween = ChronoUnit.DAYS.between(getHireDate(), LocalDate.now());
-		
-		if (daysBetween >= 5 * 365) {
+		long yearsBetween = ChronoUnit.YEARS.between(getHireDate(), LocalDate.now());
+
+		if (yearsBetween >= 5) {
 			System.out.println(getName() + " nevű gondozoo jutalmat kap!");
 		}
 	}

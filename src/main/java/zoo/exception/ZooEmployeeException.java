@@ -3,8 +3,8 @@ package zoo.exception;
 public class ZooEmployeeException extends ZooException {
 
     public enum ZooEmployeeExType {
-        NoGondozoo("error.zooEmployeeExceptionGondozoo"),
-        NoDirector("error.zooEmployeeExceptionDirector");
+        NOGONDOZOO("error.zooEmployeeExceptionGondozoo"),
+        NODIRECTOR("error.zooEmployeeExceptionDirector");
 
         private final String errorCode;
 

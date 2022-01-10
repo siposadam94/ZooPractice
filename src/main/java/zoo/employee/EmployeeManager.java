@@ -69,7 +69,7 @@ public class EmployeeManager implements Serializable {
 
         if (employee instanceof Director) {
             if (this.director == null) {
-                throw new ZooEmployeeException(prop.getProperty(ZooEmployeeException.ZooEmployeeExType.NoDirector.getErrorCode()));
+                throw new ZooEmployeeException(prop.getProperty(ZooEmployeeException.ZooEmployeeExType.NODIRECTOR.getErrorCode()));
             } else {
                 System.out.println("Az állatkert " + director.getName() + " igazgatója eltávozott!");
                 director = null;
@@ -78,30 +78,30 @@ public class EmployeeManager implements Serializable {
             workers.remove(employee);
         } else {
             Set<AnimalType> missingAnimalTypeSet = new HashSet<>();
-
             GondoZoo releasedCondoZoo = (GondoZoo) employee;
+
             for (AnimalType animalType : releasedCondoZoo.getCaredAnimalTypes()) {
                 int caredAnimalCounter = 0;
+
                 for (NonDirector worker : workers) {
-                    if (worker instanceof GondoZoo) {
-                        if (((GondoZoo) worker).getCaredAnimalTypes().contains(animalType)) {
-                            caredAnimalCounter++;
-                        }
+                    if (worker instanceof GondoZoo && ((GondoZoo) worker).getCaredAnimalTypes().contains(animalType)) {
+                        caredAnimalCounter++;
                     }
                 }
                 if (caredAnimalCounter == 0) {
                     missingAnimalTypeSet.add(animalType);
                 }
             }
+
             if (!missingAnimalTypeSet.isEmpty()) {
-                throw new ZooEmployeeException(prop.getProperty(ZooEmployeeException.ZooEmployeeExType.NoGondozoo.getErrorCode()));
+                throw new ZooEmployeeException(prop.getProperty(ZooEmployeeException.ZooEmployeeExType.NOGONDOZOO.getErrorCode()));
             } else {
                 workers.remove(employee);
             }
         }
     }
 
-    public void showRevardableEmployee() {
+    public void showRewardableEmployee() {
         for (NonDirector worker : workers) {
             worker.reward();
         }
