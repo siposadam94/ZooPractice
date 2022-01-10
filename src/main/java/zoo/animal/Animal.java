@@ -19,33 +19,40 @@ public class Animal implements Serializable {
 		this.birthday = birthday;
 		this.sex = sex;
 	}
-	public AnimalType getAnimalType() {
-		return animalType;
-	}
-	public void setAnimalType(AnimalType animalType) {
-		this.animalType = animalType;
-	}
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-	public LocalDate getBirthday() {
-		return birthday;
-	}
-	public void setBirthday(LocalDate birthday) {
-		this.birthday = birthday;
-	}
-	public Sex getSex() {
-		return sex;
-	}
-	public void setSex(Sex sex) {
-		this.sex = sex;
-	}
 
-	public String getAnimalTypeString() {
+	public String getAnimalTypeAsString() {
 		return animalType.toString();
 	}
 
+	public AnimalType getAnimalType() {
+		return animalType;
+	}
+
+	public void setAnimalType(AnimalType animalType) {
+		this.animalType = animalType;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
+	}
+
+	public Sex getSex() {
+		return sex;
+	}
+
+	public void setSex(Sex sex) {
+		this.sex = sex;
+	}
 }

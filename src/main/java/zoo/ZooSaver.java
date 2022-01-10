@@ -125,7 +125,7 @@ public class ZooSaver implements Serializable {
 
     private static String animalStringBuilder(Animal animal) {
         return "\t" +
-                animal.getAnimalTypeString() + ";" +
+                animal.getAnimalTypeAsString() + ";" +
                 animal.getNickname() + ";" +
                 animal.getBirthday() + ";" +
                 animal.getSex() + ";" +

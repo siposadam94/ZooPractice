@@ -130,7 +130,7 @@ public class Zoo implements Serializable {
         } else {
             System.out.println("Az állatkert állatai:");
             animals.stream()
-                    .sorted(Comparator.comparing(Animal::getAnimalTypeString))
+                    .sorted(Comparator.comparing(Animal::getAnimalTypeAsString))
                     .forEach(a -> System.out.println(a.getNickname()));
         }
     }
